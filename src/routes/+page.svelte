@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/ui/button.svelte';
 	import { Input } from '$lib/components/ui/input';
-	import { ArrowRight, Stars } from 'lucide-svelte';
+	import { ArrowRight, Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
 
@@ -35,16 +35,21 @@
 			<form
 				use:enhance
 				in:scale={{ duration: 400, start: 0.9 }}
-				class="mt-4 max-sm:w-full flex items-center gap-4 max-sm:flex-col"
+				class="mt-4 max-sm:w-full flex items-center sm:items-end gap-4 max-sm:flex-col"
 			>
-				<div class="max-sm:w-full">
-					<Input name="description" placeholder="Tell us about Yourself">
+				<div class="max-sm:w-full w-72">
+					<Input
+						autocomplete="off"
+						name="description"
+						placeholder="Share Your Interests, Goals, and Preferences"
+						required
+					>
 						<Stars slot="prefix" size="16" />
 					</Input>
 				</div>
 				<Button class="max-sm:w-full" type="submit" variant="accent">
-					Get Started
-					<ArrowRight class="group-hover:translate-x-1 transition" size="16" />
+					<Search size="16" />
+					Explore Now
 				</Button>
 			</form>
 		</div>
