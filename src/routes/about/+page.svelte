@@ -3,10 +3,10 @@
 </script>
 
 <main
-	class="min-h-[calc(100dvh-6.5rem)] container mx-auto px-6 pt-16 space-y-12 flex items-center flex-col"
+	class="min-h-[calc(100dvh-6.5rem)] container mx-auto px-6 pt-12 sm:pt-20 space-y-12 flex items-center flex-col"
 >
 	<h1
-		class="text-3xl font-bold font-display tracking-tighter"
+		class="text-3xl font-bold font-display tracking-tighter text-center"
 		in:scale={{ duration: 300, start: 0.9 }}
 	>
 		About Sapient
