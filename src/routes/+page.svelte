@@ -33,6 +33,7 @@
 				Sapient is your personal guide to finding the perfect university and major.
 			</p>
 			<form
+				method="POST"
 				use:enhance
 				in:scale={{ duration: 400, start: 0.9 }}
 				class="mt-4 max-sm:w-full flex items-center sm:items-end gap-4 max-sm:flex-col"
