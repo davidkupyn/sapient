@@ -3,16 +3,18 @@
 	import { CardSorter, swipeDispatcher, cardSorterAction } from '$lib/components/card-sorter/index';
 	import { Check, X } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button.svelte';
-	import Badge from '$lib/components/ui/badge.svelte';
-	import { cn } from '$lib/helpers';
+	import { cn, uuid } from '$lib/helpers';
 
+	export let data;
 	let actions: { type: 'left' | 'right'; id: number | string }[] = [];
 	let reset = 0;
 
-	let cards = Array.from({ length: 16 }, (_, i) => ({
-		id: i + 1,
-		name: `${i % 2 === 0 ? 'Tak' : 'Nie'}?`
-	}));
+	$: cards = data.questions.map((question) => {
+		return {
+			question,
+			id: uuid()
+		};
+	});
 	let swipeNextCard = swipeDispatcher.dispatch;
 </script>
 
@@ -55,7 +57,7 @@
 								'shadow-[_inset_0_1px_2px_0px_hsl(0_0%_100%/0.2),inset_0_-1px_2px_0px_hsl(0_0%_0%/0.2)] grid bg-muted border-border place-content-center transition ease-out rounded-xl w-72 h-96'
 							)}
 						>
-							{card.name}
+							{card.question}
 						</div>
 						<Placeholder class="w-72 h-96 grid place-content-center">
 							<span>empty</span>
