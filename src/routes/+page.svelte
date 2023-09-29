@@ -1,18 +1,22 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import Button from '$lib/components/ui/button.svelte';
 	import { Input } from '$lib/components/ui/input';
-	import { ArrowRight, Search, Stars } from 'lucide-svelte';
+	import { Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
+	import { superForm } from 'sveltekit-superforms/client';
+
+	export let data;
 
 	let mounted = false;
+	const { form, errors, enhance } = superForm(data.form);
+
 	onMount(() => (mounted = true));
 </script>
 
 {#key mounted}
 	<main
-		class="z-10 flex h-[calc(100dvh-3.5rem)] justify-start items-center flex-col pt-24 md:pt-40 gap-12 pb-9"
+		class="flex h-[calc(100dvh-3.5rem)] justify-start items-center flex-col pt-24 md:pt-40 gap-12 pb-9"
 	>
 		<div class="p-6 flex flex-col justify-center items-center gap-8">
 			<h1
@@ -36,13 +40,15 @@
 				method="POST"
 				use:enhance
 				in:scale={{ duration: 400, start: 0.9 }}
-				class="mt-4 max-sm:w-full flex items-center sm:items-end gap-4 max-sm:flex-col"
+				class="mt-4 max-sm:w-full flex items-center sm:items-start gap-4 max-sm:flex-col"
 			>
 				<div class="max-sm:w-full w-72">
 					<Input
 						autocomplete="off"
 						name="description"
-						placeholder="Share Your Interests, Goals, and Preferences"
+						placeholder="Share Your Interests & Goals"
+						bind:value={$form.description}
+						error={$errors.description?.join(', ')}
 						required
 					>
 						<Stars slot="prefix" size="16" />

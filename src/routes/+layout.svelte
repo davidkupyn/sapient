@@ -80,7 +80,7 @@
 				>Techni Schools, Sapient</a
 			>
 		</span>
-		{#if $page.url.pathname !== '/'}
+		{#if !['/', '/about'].includes($page.url.pathname)}
 			<Menu let:trigger let:Content placement="bottom-end">
 				<Button melt={trigger} aria-label="Theme picker" variant="ghost" size="icon">
 					{#if $themeStore.theme === 'dark'}
