@@ -20,12 +20,12 @@
 	let isInfoModalOpen = false;
 
 	onMount(() => {
-		const isInfoModalShown = localStorage.getItem('info-modal-shown');
+		const isInfoModalShown = sessionStorage.getItem('info-modal-shown');
 		if (isInfoModalShown === 'true') {
 			isInfoModalOpen = false;
 		} else {
 			isInfoModalOpen = true;
-			localStorage.setItem('info-modal-shown', 'true');
+			sessionStorage.setItem('info-modal-shown', 'true');
 		}
 	});
 
