@@ -1,12 +1,25 @@
+import { exploreSchema } from '$lib/schemas/explore.js';
+import { fail } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms/server';
+
+export async function load() {
+	const form = await superValidate(exploreSchema);
+
+	return { form };
+}
+
 export const actions = {
 	default: async ({ request }) => {
-		const formData = await request.formData();
-		const description = formData.get('description');
+		const form = await superValidate(request, exploreSchema);
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const { description } = form.data;
 		console.log(description);
 		return {
-			props: {
-				title: 'Page'
-			}
+			form
 		};
 	}
 };
