@@ -47,17 +47,17 @@
 		{#if $lastCardSorterAction === 'left'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] left-0 from-error-500/50 via-error-500/0 dark:from-error-500/30 dark:via-error-500/0 to absolute top-1/2 -translate-y-1/2"
+				class="pointer-events-none aspect-[1/3] z-20 max-h-full max-w-full sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] left-0 from-error-500/50 via-error-500/0 dark:from-error-500/30 dark:via-error-500/0 to absolute top-1/2 -translate-y-1/2"
 			/>
 		{:else if $lastCardSorterAction === 'right'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/50 via-success-500/0 dark:from-success-500/30 dark:via-success-500/0 absolute top-1/2 -translate-y-1/2"
+				class="pointer-events-none aspect-[1/3] z-20 max-h-full max-w-full sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/50 via-success-500/0 dark:from-success-500/30 dark:via-success-500/0 absolute top-1/2 -translate-y-1/2"
 			/>
 		{:else if $lastCardSorterAction === 'bottom'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[3/1] z-20 w-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] bottom-0 from-base-500/50 via-base-500/0 dark:from-from-500/30 dark:via-from-500/0 absolute left-1/2 -translate-x-1/2"
+				class="pointer-events-none aspect-[3/1] z-20 max-h-full max-w-full w-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] bottom-0 from-base-500/50 via-base-500/0 dark:from-from-500/30 dark:via-from-500/0 absolute left-1/2 -translate-x-1/2"
 			/>
 		{/if}
 		<div>
