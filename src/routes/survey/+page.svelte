@@ -7,9 +7,9 @@
 		undoSwipeDispatcher,
 		type SwipeActionType
 	} from '$lib/components/card-sorter/index';
-	import { Check, Info, X } from 'lucide-svelte';
+	import { Check, HelpCircle, X } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button.svelte';
-	import { cn, uuid, getMetakey } from '$lib/helpers';
+	import { cn, getMetakey } from '$lib/helpers';
 	import { Modal } from '$lib/components/ui/modal';
 	import Kbd from '$lib/components/ui/kbd.svelte';
 	import { onMount } from 'svelte';
@@ -46,13 +46,14 @@
 	class="min-h-[calc(100dvh-6.5rem)] w-full px-6 pt-12 sm:pt-20 space-y-16 flex items-center flex-col overflow-hidden"
 >
 	<h1
-		class="text-xl sm:text-3xl font-bold font-display tracking-tighter text-center flex items-center gap-3"
+		class="text-xl sm:text-3xl [text-wrap:balance] font-bold font-display tracking-tighter text-center max-sm:flex-col flex items-center gap-3"
 		in:scale={{ duration: 300, start: 0.9 }}
 	>
-		Let's Blitz through Questions!
-		<Button on:click={() => (isInfoModalOpen = true)} size="icon" variant="text" aria-hidden
-			><Info size="20" class="text-info" /></Button
-		>
+		Let's Blitz through some Questions!
+
+		<Button on:click={() => (isInfoModalOpen = true)} size="icon" variant="text" aria-hidden>
+			<HelpCircle size="20" />
+		</Button>
 	</h1>
 	<div class="grid h-fit">
 		{#if $lastCardSorterAction === 'left'}

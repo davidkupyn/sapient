@@ -14,11 +14,11 @@
 
 	onMount(() => (mounted = true));
 
-	let showForm: boolean;
+	let currentView: 'search' | 'survey';
 
 	onMount(() => {
 		const actionChoice = localStorage.getItem('action-choice') as 'search' | 'survey';
-		showForm = !!actionChoice;
+		currentView = actionChoice ? 'search' : 'survey';
 	});
 </script>
 
@@ -46,7 +46,7 @@
 				university and major. Let's get started!
 			</p>
 
-			{#if showForm}
+			{#if currentView === 'search'}
 				<form
 					method="POST"
 					use:enhance
@@ -78,15 +78,18 @@
 						Not sure yet? Take a <Button variant="link" class="p-0">quick survey!</Button>
 					</p>
 				</form>
-			{:else if showForm === false}
+			{:else if currentView === 'survey'}
 				<div in:scale|global={{ duration: 400, start: 0.9 }}>
-					<Card let:Header let:Footer class="flex flex-col gap-8 items-center">
-						<Header let:Title>
-							<Title
-								>Interested in Taking a <span class="text-accent ml-1 dark:tracking-wide"
-									>Quick Survey?</span
-								></Title
-							>
+					<Card let:Header let:Footer class="flex flex-col gap-4 items-center max-w-md">
+						<Header let:Title let:Description>
+							<Title class="text-center">
+								Unsure about your
+								<span class="text-accent dark:tracking-wide">ideal major?</span>
+							</Title>
+							<Description class="text-center">
+								Tu bedzie fajny opis ankiety, ktory napisze Gustaw z Szymonem, albo zrobi to za nich
+								ChatGPT
+							</Description>
 						</Header>
 						<Footer class="space-x-3">
 							<Button
@@ -99,7 +102,7 @@
 							<Button
 								on:click={() => {
 									localStorage.setItem('action-choice', 'search');
-									showForm = true;
+									currentView = 'search';
 								}}
 								variant="outline">No</Button
 							>
