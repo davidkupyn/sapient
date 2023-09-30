@@ -1,12 +1,18 @@
 <script lang="ts">
 	import { fade, scale } from 'svelte/transition';
-	import { CardSorter, swipeDispatcher, cardSorterAction } from '$lib/components/card-sorter/index';
+	import {
+		CardSorter,
+		swipeDispatcher,
+		lastCardSorterAction,
+		undoSwipeDispatcher,
+		type SwipeActionType
+	} from '$lib/components/card-sorter/index';
 	import { Check, X } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import { cn, uuid } from '$lib/helpers';
 
 	export let data;
-	let actions: { type: 'left' | 'right'; id: number | string }[] = [];
+	let actions: { type: SwipeActionType; id: number | string }[] = [];
 	let reset = 0;
 
 	$: cards = data.questions.map((question) => {
@@ -16,17 +22,20 @@
 		};
 	});
 	let swipeNextCard = swipeDispatcher.dispatch;
+	let undoSwipe = undoSwipeDispatcher.dispatch;
 </script>
 
 <svelte:window
 	on:keydown={(e) => {
 		if (e.key === 'ArrowLeft') swipeNextCard('left');
 		if (e.key === 'ArrowRight') swipeNextCard('right');
+		if (e.key === 'ArrowDown') swipeNextCard('bottom');
+		if (e.key === 'z' && e.metaKey) undoSwipe();
 	}}
 />
 
 <main
-	class="min-h-[calc(100dvh-6.5rem)] w-full px-6 pt-12 sm:pt-20 space-y-16 flex items-center flex-col overflow-hidden"
+	class="h-[calc(100dvh-6.5rem)] w-full px-6 pt-12 sm:pt-20 space-y-16 flex items-center flex-col overflow-hidden"
 >
 	<h1
 		class="text-3xl font-bold font-display tracking-tighter text-center"
@@ -35,15 +44,20 @@
 		Let's Blitz through Questions!
 	</h1>
 	<div class="grid h-fit">
-		{#if $cardSorterAction === 'left'}
+		{#if $lastCardSorterAction === 'left'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] left-0 from-error-500/30 via-error-500/0 to absolute top-1/2 -translate-y-1/2"
+				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] left-0 from-error-500/50 via-error-500/0 dark:from-error-500/30 dark:via-error-500/0 to absolute top-1/2 -translate-y-1/2"
 			/>
-		{:else if $cardSorterAction === 'right'}
+		{:else if $lastCardSorterAction === 'right'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/30 via-success-500/0 absolute top-1/2 -translate-y-1/2"
+				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/50 via-success-500/0 dark:from-success-500/30 dark:via-success-500/0 absolute top-1/2 -translate-y-1/2"
+			/>
+		{:else if $lastCardSorterAction === 'bottom'}
+			<div
+				transition:fade={{ duration: 300 }}
+				class="pointer-events-none aspect-[3/1] z-20 w-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] bottom-0 from-base-500/50 via-base-500/0 dark:from-from-500/30 dark:via-from-500/0 absolute left-1/2 -translate-x-1/2"
 			/>
 		{/if}
 		<div>
@@ -76,17 +90,13 @@
 				Yes
 			</Button>
 		</div>
-		<!-- <Button
+		<Button
 			variant="secondary"
 			size="icon"
 			class="mb-12 w-[5.5rem] mx-auto"
-			on:click={() => {
-				actions = [];
-				reset++;
-			}}
+			on:click={() => undoSwipe()}
 		>
-			Reset
+			Undo
 		</Button>
-	</div> -->
 	</div>
 </main>
