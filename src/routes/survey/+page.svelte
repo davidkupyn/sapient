@@ -38,7 +38,7 @@
 		if (e.key === 'ArrowLeft') swipeNextCard('left');
 		if (e.key === 'ArrowRight') swipeNextCard('right');
 		if (e.key === 'ArrowDown') swipeNextCard('bottom');
-		if (e.key === 'z' && e.metaKey) undoSwipe();
+		if (e.key === 'z' && (e.metaKey || e.ctrlKey)) undoSwipe();
 	}}
 />
 
@@ -91,8 +91,8 @@
 				</div>
 			{/key}
 		</div>
-		<div>
-			<div class="mt-16 mb-4 flex gap-4 mx-auto">
+		<div class="space-y-4">
+			<div class="mt-16 flex gap-4 mx-auto">
 				<Button class="w-full" variant="outline" on:click={() => swipeNextCard('left')}>
 					<X class="text-error" size="20" />
 					No
@@ -102,14 +102,10 @@
 					Yes
 				</Button>
 			</div>
-			<Button
-				variant="secondary"
-				size="icon"
-				class="mb-12 w-full mx-auto"
-				on:click={() => undoSwipe()}
+			<Button variant="outline" class="w-full mx-auto" on:click={() => swipeNextCard('bottom')}
+				>Skip</Button
 			>
-				Undo
-			</Button>
+			<Button variant="text" class="w-full mx-auto" on:click={() => undoSwipe()}>Undo</Button>
 		</div>
 	</div>
 </main>

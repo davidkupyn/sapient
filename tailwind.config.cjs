@@ -23,7 +23,7 @@ const config = {
 					DEFAULT: 'var(--color-accent)',
 					focus: 'var(--color-accent-focus)',
 					foreground: 'var(--color-accent-foreground)',
-					...colors.sky
+					...colors.blue
 				},
 				base: colors.zinc,
 				background: 'hsl(var(--color-background))',
