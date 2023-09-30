@@ -16,7 +16,7 @@
 	let active = true;
 	let position = spring({ x: 0, y: 0 }, { damping: 0.6, stiffness: 0.15 });
 	let horizontalBound = browser ? (window.innerWidth > 768 ? 150 : 50) : 150;
-	let verticalBound = browser ? (window.innerWidth > 768 ? 200 : 30) : 150;
+	let verticalBound = browser ? (window.innerWidth > 768 ? 300 : 50) : 150;
 	let className: string | undefined | null = undefined;
 	let upcomingAction: SwipeActionType | undefined;
 	export { className as class };
@@ -86,7 +86,12 @@
 			onDrag: (data) => {
 				if (data.offsetX > horizontalBound) upcomingAction = 'right';
 				if (data.offsetX < -horizontalBound) upcomingAction = 'left';
-				if (data.offsetY > verticalBound) upcomingAction = 'bottom';
+				if (
+					data.offsetY > verticalBound &&
+					data.offsetX < horizontalBound &&
+					data.offsetX > -horizontalBound
+				)
+					upcomingAction = 'bottom';
 
 				$position = { x: data.offsetX, y: data.offsetY };
 			},
@@ -95,8 +100,7 @@
 					swipeAction($position.x > horizontalBound ? 'right' : 'left');
 				} else if (
 					$position.y > verticalBound &&
-					$position.x < horizontalBound &&
-					$position.x > -horizontalBound
+					($position.x < horizontalBound || $position.x > -horizontalBound)
 				) {
 					swipeAction('bottom');
 				} else {
