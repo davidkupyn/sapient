@@ -115,7 +115,7 @@
 </main>
 
 <Modal alert let:Content bind:open={isInfoModalOpen} type="info" crossButton closeOnOutsideClick>
-	<Content let:Header let:Footer class="max-w-md">
+	<Content let:Header let:Footer class="max-w-md" let:close>
 		<Header let:Title let:Description>
 			<Title>Interactive Controls Guide</Title>
 			<Description class="">
@@ -141,7 +141,7 @@
 			</Description>
 		</Header>
 		<Footer>
-			<Button variant="accent">Understood</Button>
+			<Button melt={close} variant="accent">Understood</Button>
 		</Footer>
 	</Content>
 </Modal>
