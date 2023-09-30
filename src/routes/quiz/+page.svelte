@@ -94,16 +94,16 @@
 		<div>
 			<div class="mt-16 mb-4 flex gap-4 mx-auto">
 				<Button class="w-full" variant="secondary" on:click={() => swipeNextCard('left')}>
-					<X size="20" />
+					<X class="text-error" size="20" />
 					No
 				</Button>
 				<Button class="w-full" variant="secondary" on:click={() => swipeNextCard('right')}>
-					<Check size="20" />
+					<Check class="text-success" size="20" />
 					Yes
 				</Button>
 			</div>
 			<Button
-				variant="secondary"
+				variant="outline"
 				size="icon"
 				class="mb-12 w-full mx-auto"
 				on:click={() => undoSwipe()}
