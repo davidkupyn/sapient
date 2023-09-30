@@ -16,7 +16,7 @@
 	let active = true;
 	let position = spring({ x: 0, y: 0 }, { damping: 0.6, stiffness: 0.15 });
 	let horizontalBound = browser ? (window.innerWidth > 768 ? 150 : 50) : 150;
-	let verticalBound = browser ? (window.innerWidth > 768 ? 300 : 50) : 150;
+	let verticalBound = browser ? (window.innerWidth > 768 ? 300 : 60) : 150;
 	let className: string | undefined | null = undefined;
 	let upcomingAction: SwipeActionType | undefined;
 	export { className as class };
