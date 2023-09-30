@@ -81,7 +81,7 @@
 		class={className}
 		use:draggable={{
 			position: $position,
-			bounds: { top: 80, bottom: 80, left: -1200, right: -1200 },
+			bounds: { top: 80, bottom: -1200, left: -1200, right: -1200 },
 
 			onDrag: (data) => {
 				if (data.offsetX > horizontalBound) upcomingAction = 'right';
