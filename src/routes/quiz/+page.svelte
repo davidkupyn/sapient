@@ -7,20 +7,28 @@
 		undoSwipeDispatcher,
 		type SwipeActionType
 	} from '$lib/components/card-sorter/index';
-	import { Check, X } from 'lucide-svelte';
+	import { Check, Info, X } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button.svelte';
-	import { cn, uuid } from '$lib/helpers';
+	import { cn, uuid, getMetakey } from '$lib/helpers';
+	import { Modal } from '$lib/components/ui/modal';
+	import Kbd from '$lib/components/ui/kbd.svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
 	let actions: { type: SwipeActionType; id: number | string }[] = [];
 	let reset = 0;
+	let isInfoModalOpen = false;
 
-	$: cards = data.questions.map((question) => {
-		return {
-			question,
-			id: uuid()
-		};
+	onMount(() => {
+		const isInfoModalShown = localStorage.getItem('info-modal-shown');
+		if (isInfoModalShown === 'true') {
+			isInfoModalOpen = false;
+		} else {
+			isInfoModalOpen = true;
+			localStorage.setItem('info-modal-shown', 'true');
+		}
 	});
+
 	let swipeNextCard = swipeDispatcher.dispatch;
 	let undoSwipe = undoSwipeDispatcher.dispatch;
 </script>
@@ -35,13 +43,16 @@
 />
 
 <main
-	class="h-[calc(100dvh-6.5rem)] w-full px-6 pt-12 sm:pt-20 space-y-16 flex items-center flex-col overflow-hidden"
+	class="min-h-[calc(100dvh-6.5rem)] w-full px-6 pt-12 sm:pt-20 space-y-16 flex items-center flex-col overflow-hidden"
 >
 	<h1
-		class="text-3xl font-bold font-display tracking-tighter text-center"
+		class="text-xl sm:text-3xl font-bold font-display tracking-tighter text-center flex items-center gap-3"
 		in:scale={{ duration: 300, start: 0.9 }}
 	>
 		Let's Blitz through Questions!
+		<Button on:click={() => (isInfoModalOpen = true)} size="icon" variant="secondary" aria-hidden
+			><Info size="16" /></Button
+		>
 	</h1>
 	<div class="grid h-fit">
 		{#if $lastCardSorterAction === 'left'}
@@ -63,40 +74,74 @@
 		<div>
 			{#key reset}
 				<div in:fade={{ duration: 150 }}>
-					<CardSorter bind:cards bind:actions let:Placeholder>
+					<CardSorter cards={data.questions} bind:actions let:Placeholder>
 						<div
 							slot="card"
 							let:card
 							class={cn(
-								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] grid bg-muted place-content-center transition ease-out rounded-xl w-72 h-96'
+								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] grid bg-muted place-content-center transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
 							)}
 						>
 							{card.question}
 						</div>
-						<Placeholder class="w-72 h-96 grid place-content-center">
+						<Placeholder class="w-60 h-80 md:w-72 md:h-96 grid place-content-center">
 							<span>empty</span>
 						</Placeholder>
 					</CardSorter>
 				</div>
 			{/key}
 		</div>
-		<div class="mt-16 mb-4 flex gap-4 mx-auto">
-			<Button variant="secondary" on:click={() => swipeNextCard('left')}>
-				<X size="20" />
-				No
-			</Button>
-			<Button variant="secondary" on:click={() => swipeNextCard('right')}>
-				<Check size="20" />
-				Yes
+		<div>
+			<div class="mt-16 mb-4 flex gap-4 mx-auto">
+				<Button class="w-full" variant="secondary" on:click={() => swipeNextCard('left')}>
+					<X size="20" />
+					No
+				</Button>
+				<Button class="w-full" variant="secondary" on:click={() => swipeNextCard('right')}>
+					<Check size="20" />
+					Yes
+				</Button>
+			</div>
+			<Button
+				variant="secondary"
+				size="icon"
+				class="mb-12 w-full mx-auto"
+				on:click={() => undoSwipe()}
+			>
+				Undo
 			</Button>
 		</div>
-		<Button
-			variant="secondary"
-			size="icon"
-			class="mb-12 w-[5.5rem] mx-auto"
-			on:click={() => undoSwipe()}
-		>
-			Undo
-		</Button>
 	</div>
 </main>
+
+<Modal alert let:Content bind:open={isInfoModalOpen} type="info" crossButton closeOnOutsideClick>
+	<Content let:Header let:Footer class="max-w-md">
+		<Header let:Title let:Description>
+			<Title>Interactive Controls Guide</Title>
+			<Description class="">
+				<p class="mb-2">
+					This page features interactive cards that you can navigate using various controls:
+				</p>
+				<ul class="list-disc list-inside pl-2">
+					<li>Swipe left for 'No'</li>
+					<li>Swipe right for 'Yes'</li>
+					<li>Swipe down to skip</li>
+					<li>
+						Use arrow keys for navigation
+
+						<Kbd class="ml-1">←</Kbd>
+						<Kbd>→</Kbd>
+						<Kbd>↓</Kbd>
+					</li>
+				</ul>
+				<p class="mt-4">
+					To undo your last action, you can either press <Kbd>{getMetakey()} + Z</Kbd>, or simply
+					click the 'Undo' button.
+				</p>
+			</Description>
+		</Header>
+		<Footer>
+			<Button variant="accent">Understood</Button>
+		</Footer>
+	</Content>
+</Modal>

@@ -34,7 +34,7 @@
 			id={card.id}
 			bind:swiped={swipedCards[idx]}
 			let:upcomingAction
-			rotation={randRange(-3, 6)}
+			rotation={idx}
 			isTop={topIdx === idx}
 			isLastSwiped={card.id === actions[actions.length - 1]?.id}
 		>

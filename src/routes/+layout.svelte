@@ -71,14 +71,20 @@
 <div
 	class="pointer-events-none absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center w-full h-screen bottom-0 bg-gradient-to-b from-accent-500/50 dark:from-accent-600/25 via-accent-500/5 dark:via-accent-900/5 to-background/0 dark:to-background/0"
 /> -->
-<footer class={cn('border-muted z-[0] w-full fixed bottom-0')}>
+
+<footer
+	class={cn(
+		'border-muted z-[0] w-full bottom-0',
+		$page.url.pathname === '/' ? 'fixed' : 'border-t'
+	)}
+>
 	<div class="container mx-auto flex justify-between items-center px-6 h-14">
 		<span class="mx-auto text-sm text-muted-foreground">
 			<span class="mr-1.5">&copy</span><a
 				href="https://github.com/davidkupyn"
 				target="_blank"
 				class="font-medium border-b border-opacity-0 dark:border-opacity-0 border-base-500 dark:border-base-400 hover:border-opacity-100 dark:hover:border-opacity-100 transition"
-				>Techni Schools, Sapient</a
+				>Techni Schools</a
 			>
 		</span>
 	</div>
