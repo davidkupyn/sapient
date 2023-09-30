@@ -67,8 +67,11 @@
 </header>
 
 <slot />
-<div
+<!-- <div
 	class="pointer-events-none absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] w-full h-screen dark:to-accent-500/40 to-accent-500/75 z-50 from-background/0 via-background/0 bottom-0"
+/> -->
+<div
+	class="pointer-events-none absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center w-full h-screen bottom-0 bg-gradient-to-tr from-accent-500/50 dark:from-accent-500/25 via-accent-500/5 dark:via-accent-500/5 to-background/0 dark:to-background/0 blur-3xl"
 />
 <footer class={cn('border-muted w-full fixed bottom-0')}>
 	<div class="container mx-auto flex justify-between items-center px-6 h-14">
