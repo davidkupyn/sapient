@@ -12,7 +12,7 @@
 
 {#key mounted}
 	<main
-		class="z-10 flex h-[calc(100dvh-3.5rem)] justify-start items-center flex-col pt-24 md:pt-40 gap-12 pb-9"
+		class="z-10 flex h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-40 gap-12 pb-9 relative"
 	>
 		<div class="p-6 flex flex-col justify-center items-center gap-8">
 			<h1
@@ -54,8 +54,8 @@
 				</Button>
 			</form>
 		</div>
-		<div class="flex w-full p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center">
-			Something Beautiful Here
-		</div>
+		<!-- <div
+			class=" absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] w-full h-screen dark:to-accent-500/40 to-accent-500/75 z-50 from-background/0 via-background/0 bottom-0"
+		/> -->
 	</main>
 {/key}

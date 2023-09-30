@@ -67,10 +67,10 @@
 </header>
 
 <slot />
-
-<footer
-	class={cn('border-muted w-full', $page.url.pathname === '/sidebar' ? 'hidden' : 'border-t')}
->
+<div
+	class="pointer-events-none absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] w-full h-screen dark:to-accent-500/40 to-accent-500/75 z-50 from-background/0 via-background/0 bottom-0"
+/>
+<footer class={cn('border-muted w-full fixed bottom-0')}>
 	<div class="container mx-auto flex justify-between items-center px-6 h-14">
 		<span class="mx-auto text-sm text-muted-foreground">
 			<span class="mr-1.5">&copy</span><a
@@ -80,7 +80,8 @@
 				>Techni Schools, Sapient</a
 			>
 		</span>
-		{#if $page.url.pathname !== '/'}
+
+		<!-- {#if $page.url.pathname !== '/'}
 			<Menu let:trigger let:Content placement="bottom-end">
 				<Button melt={trigger} aria-label="Theme picker" variant="ghost" size="icon">
 					{#if $themeStore.theme === 'dark'}
@@ -99,6 +100,6 @@
 					</RadioGroup>
 				</Content>
 			</Menu>
-		{/if}
+		{/if} -->
 	</div>
 </footer>
