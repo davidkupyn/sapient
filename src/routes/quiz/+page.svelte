@@ -57,7 +57,7 @@
 		{:else if $lastCardSorterAction === 'bottom'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[3/1] sm:aspect-[4/1] z-20 max-w-full w-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] bottom-0 from-base-500/50 via-base-500/0 dark:from-from-500/30 dark:via-from-500/0 absolute left-1/2 -translate-x-1/2"
+				class="pointer-events-none aspect-[3/1] sm:aspect-[4/1] z-20 max-w-full w-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] bottom-0 from-accent-500/50 via-accent-500/0 dark:from-accent-500/30 dark:via-accent-500/0 absolute left-1/2 -translate-x-1/2"
 			/>
 		{/if}
 		<div>
