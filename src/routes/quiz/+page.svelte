@@ -54,7 +54,7 @@
 							slot="card"
 							let:card
 							class={cn(
-								'shadow-[_inset_0_1px_2px_0px_hsl(0_0%_100%/0.2),inset_0_-1px_2px_0px_hsl(0_0%_0%/0.2)] grid bg-muted border-border place-content-center transition ease-out rounded-xl w-72 h-96'
+								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] grid bg-muted place-content-center transition ease-out rounded-xl w-72 h-96'
 							)}
 						>
 							{card.question}
