@@ -50,8 +50,8 @@
 		in:scale={{ duration: 300, start: 0.9 }}
 	>
 		Let's Blitz through Questions!
-		<Button on:click={() => (isInfoModalOpen = true)} size="icon" variant="secondary" aria-hidden
-			><Info size="16" /></Button
+		<Button on:click={() => (isInfoModalOpen = true)} size="icon" variant="text" aria-hidden
+			><Info size="20" class="text-info" /></Button
 		>
 	</h1>
 	<div class="grid h-fit">
