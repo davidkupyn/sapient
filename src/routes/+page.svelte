@@ -24,7 +24,7 @@
 
 {#key mounted}
 	<main
-		class="z-10 flex h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-40 gap-12 pb-9 relative"
+		class="z-10 flex h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-12 pb-9 relative"
 	>
 		<div class="p-6 flex flex-col justify-center items-center gap-8">
 			<h1
@@ -80,32 +80,37 @@
 				</form>
 			{:else if currentView === 'survey'}
 				<div in:scale|global={{ duration: 400, start: 0.9 }}>
-					<Card let:Header let:Footer class="flex flex-col gap-4 items-center max-w-md">
+					<Card let:Header let:Footer class="flex flex-col gap-6 items-center max-w-md">
 						<Header let:Title let:Description>
 							<Title class="text-center">
 								Unsure about your
 								<span class="text-accent dark:tracking-wide">ideal major?</span>
 							</Title>
 							<Description class="text-center">
-								Tu bedzie fajny opis ankiety, ktory napisze Gustaw z Szymonem, albo zrobi to za nich
-								ChatGPT
+								Answer a few simple questions to find out which field of study suites you the best!
 							</Description>
 						</Header>
-						<Footer class="space-x-3">
+						<Footer class="gap-4 max-sm:w-full">
 							<Button
 								href="/survey"
 								variant="accent"
+								class="w-full sm:w-24"
 								on:click={() => {
 									localStorage.setItem('action-choice', 'survey');
-								}}>Yes</Button
+								}}
 							>
+								Yes
+							</Button>
 							<Button
 								on:click={() => {
 									localStorage.setItem('action-choice', 'search');
 									currentView = 'search';
 								}}
-								variant="outline">No</Button
+								class="w-full sm:w-24"
+								variant="outline"
 							>
+								No
+							</Button>
 						</Footer>
 					</Card>
 				</div>

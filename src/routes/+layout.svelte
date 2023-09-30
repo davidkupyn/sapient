@@ -39,6 +39,19 @@
 			<ul class="inline-flex gap-2 items-center -mr-4">
 				<li>
 					<Menu let:trigger let:Content>
+						<Button melt={trigger} aria-label="Language picker" variant="ghost" size="icon"
+							>EN</Button
+						>
+						<Content let:RadioGroup>
+							<RadioGroup let:Radio value="en">
+								<Radio value="en">English</Radio>
+								<Radio value="pl" disabled>Polish</Radio>
+							</RadioGroup>
+						</Content>
+					</Menu>
+				</li>
+				<li>
+					<Menu let:trigger let:Content>
 						<Button melt={trigger} aria-label="Theme picker" variant="ghost" size="icon">
 							{#if $themeStore.theme === 'dark'}
 								<Moon size="16" />

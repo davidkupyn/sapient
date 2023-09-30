@@ -15,7 +15,7 @@
 </script>
 
 <div
-	class={cn(item(), 'relative pl-8 ', className)}
+	class={cn(item(), 'relative pl-8', className)}
 	{...$radioItem({ value, disabled })}
 	use:radioItem
 >
