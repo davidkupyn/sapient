@@ -38,12 +38,12 @@
 		{#if $cardSorterAction === 'left'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] left-0 from-error-500/30 via-error-500/0 to absolute top-1/2 -translate-y-1/2"
+				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full max-h-full sm:w-1/2 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] left-0 from-error-500/30 via-error-500/0 absolute top-1/2 -translate-y-1/2"
 			/>
 		{:else if $cardSorterAction === 'right'}
 			<div
 				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/30 via-success-500/0 absolute top-1/2 -translate-y-1/2"
+				class="pointer-events-none aspect-[1/3] z-20 sm:aspect-[3/5] w-full max-h-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/30 via-success-500/0 absolute top-1/2 -translate-y-1/2"
 			/>
 		{/if}
 		<div>
