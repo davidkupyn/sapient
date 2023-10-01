@@ -2,7 +2,7 @@ import type { University } from '$lib/types';
 
 export async function load({ url }) {
 	const searchQuery = url.searchParams.get('search');
-	console.log(searchQuery);
+
 	// const mode = url.searchParams.has('mode')
 	// 	? JSON.parse(url.searchParams.get('mode') || '')
 	// 	: undefined;
@@ -17,8 +17,10 @@ export async function load({ url }) {
 	// 	: undefined;
 
 	if (searchQuery) {
-		const searchJSON = await fetch(`https://sapient-api.kupyn.dev/search?q=${searchQuery}`);
-		return { universities: (await searchJSON.json()) as University[] };
+		const searchJSON = await fetch(`https://sapient-api.kupyn.dev/search?q='${searchQuery}'`);
+		console.log(searchJSON.json());
+
+		return { universities: [] as University[] };
 	}
 
 	return { universities: [] as University[] };
