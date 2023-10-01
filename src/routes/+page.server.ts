@@ -1,27 +1,19 @@
-import { exploreSchema } from '$lib/schemas';
 import type { University } from '$lib/types';
-import { fail } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 
 export async function load({ url }) {
 	const searchQuery = url.searchParams.get('search');
-	const form = await superValidate(exploreSchema(searchQuery ?? ''));
+	const mode = url.searchParams.has('mode')
+		? JSON.parse(url.searchParams.get('mode') || '')
+		: undefined;
+	const city = url.searchParams.has('city')
+		? JSON.parse(url.searchParams.get('city') || '')
+		: undefined;
+	const type = url.searchParams.has('type')
+		? JSON.parse(url.searchParams.get('type') || '')
+		: undefined;
+	const degree = url.searchParams.has('degree')
+		? JSON.parse(url.searchParams.get('degree') || '')
+		: undefined;
 
-	return { form, universities: [{ name: 'Techni Schools' }, { name: 'Vizja' }] as University[] };
+	return { universities: [{ name: 'Techni Schools' }, { name: 'Vizja' }] as University[] };
 }
-
-export const actions = {
-	default: async ({ request }) => {
-		const form = await superValidate(request, exploreSchema());
-
-		if (!form.valid) {
-			return fail(400, { form });
-		}
-
-		const { description } = form.data;
-		console.log(description);
-		return {
-			form
-		};
-	}
-};

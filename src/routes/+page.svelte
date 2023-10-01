@@ -11,16 +11,13 @@
 	import Badge from '$lib/components/ui/badge.svelte';
 	import { Disclosure } from '$lib/components/ui/disclosure';
 	import { readableResults } from './survey/+page.svelte';
+	import { page } from '$app/stores';
 
-	export let data;
 	let modeValues: { label: string; value?: string }[] = [];
 	let cityValues: { label: string; value?: string }[] = [];
 	let ownershipValues: { label: string; value?: string }[] = [];
 	let degreeValues: { label: string; value?: string }[] = [];
 	let mounted = false;
-	const { form, errors, enhance } = superForm(data.form, {
-		taintedMessage: null
-	});
 
 	const modes = [
 		{ label: 'Full-time', value: 'full-time' },
@@ -64,7 +61,7 @@
 
 {#key mounted}
 	<main
-		class="z-10 flex min-h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-6 sm:gap-16 pb-9 relative"
+		class="z-10 flex min-h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-6 sm:gap-8 pb-9 relative"
 	>
 		<div class="p-6 flex flex-col justify-center items-center gap-8">
 			<h1
@@ -86,25 +83,21 @@
 				university and major. Let's get started!
 			</p>
 			{#if currentView === 'search'}
-				<div class="flex flex-col gap-1 w-full items-center">
-					<div class="flex gap-2 mb-1.5">
+				<div class="flex flex-col gap-1 w-full max-w-xl items-center">
+					<div class="flex gap-2 mb-1.5 w-full">
 						{#each $readableResults as result}
 							<Badge subtle variant="accent" href="/?search={encodeURI(result)}">{result}</Badge>
 						{/each}
 					</div>
 					<form
-						method="POST"
-						use:enhance
 						in:scale|global={{ duration: 400, start: 0.9 }}
 						class="w-full max-w-xl flex items-center sm:items-start gap-4 max-sm:flex-col"
 					>
 						<div class="w-full flex flex-col gap-1">
 							<Input
 								autocomplete="off"
-								name="description"
+								name="search"
 								placeholder="Share Your Interests, Goals, and Preferences"
-								bind:value={$form.description}
-								error={$errors.description?.join(', ')}
 								required
 							>
 								<Stars slot="prefix" size="16" />
@@ -166,102 +159,107 @@
 		</div>
 		{#if currentView === 'search'}
 			<div class="w-full flex mx-auto px-6 container gap-5 max-xl:flex-col max-xl:max-w-xl">
-				<Card class="w-full h-fit flex-1 p-4">
+				<Card class="w-full h-fit flex-1 p-4" let:Footer>
 					<Disclosure let:Summary let:Details>
 						<Summary>Filter</Summary>
-						<Details class="flex gap-2 flex-col mt-4 pb-2">
-							<AutoComplete
-								placeholder="Study form"
-								label="Study form"
-								required
-								let:Option
-								multiple
-								bind:value={modeValues}
-							>
-								{#each modes as { label, value } (value)}
-									<Option {value}>
-										{label}
-									</Option>
-								{/each}
-							</AutoComplete>
-							<div class="flex flex-wrap gap-2">
-								{#each modeValues as mode}
-									<Badge variant="outline">
-										{mode.label}
-									</Badge>
-								{/each}
-							</div>
-							<AutoComplete
-								placeholder="City"
-								label="City"
-								required
-								let:Option
-								multiple
-								bind:value={cityValues}
-							>
-								{#each cities as { label, value } (value)}
-									<Option {value}>
-										{label}
-									</Option>
-								{/each}
-							</AutoComplete>
-							<div class="flex flex-wrap gap-3">
-								{#each cityValues as city}
-									<Badge variant="outline">
-										{city.label}
-									</Badge>
-								{/each}
-							</div>
-							<AutoComplete
-								placeholder="Type of university"
-								label="Type of university"
-								required
-								let:Option
-								multiple
-								bind:value={ownershipValues}
-							>
-								{#each ownership as { label, value } (value)}
-									<Option {value}>
-										{label}
-									</Option>
-								{/each}
-							</AutoComplete>
-							<div class="flex flex-wrap gap-3">
-								{#each ownershipValues as ownership}
-									<Badge variant="outline">
-										{ownership.label}
-									</Badge>
-								{/each}
-							</div>
-							<AutoComplete
-								placeholder="Degree"
-								label="Degree"
-								required
-								let:Option
-								multiple
-								bind:value={degreeValues}
-							>
-								{#each degrees as { label, value } (value)}
-									<Option {value}>
-										{label}
-									</Option>
-								{/each}
-							</AutoComplete>
-							<div class="flex flex-wrap gap-3">
-								{#each degreeValues as degree}
-									<Badge variant="outline">
-										{degree.label}
-									</Badge>
-								{/each}
-							</div>
+						<Details class="mt-4 pb-2">
+							<form class="flex gap-2 flex-col">
+								<input type="hidden" name="search" value={$page.url.searchParams.get('search')} />
+
+								<AutoComplete
+									placeholder="Study form"
+									label="Study form"
+									required
+									name="mode"
+									let:Option
+									multiple
+									bind:value={modeValues}
+								>
+									{#each modes as { label, value } (value)}
+										<Option {value}>
+											{label}
+										</Option>
+									{/each}
+								</AutoComplete>
+								<div class="flex flex-wrap gap-2">
+									{#each modeValues as mode}
+										<Badge variant="outline">
+											{mode.label}
+										</Badge>
+									{/each}
+								</div>
+								<AutoComplete
+									placeholder="City"
+									name="city"
+									label="City"
+									required
+									let:Option
+									multiple
+									bind:value={cityValues}
+								>
+									{#each cities as { label, value } (value)}
+										<Option {value}>
+											{label}
+										</Option>
+									{/each}
+								</AutoComplete>
+								<div class="flex flex-wrap gap-3">
+									{#each cityValues as city}
+										<Badge variant="outline">
+											{city.label}
+										</Badge>
+									{/each}
+								</div>
+								<AutoComplete
+									placeholder="Type of university"
+									label="Type of university"
+									name="type"
+									required
+									let:Option
+									multiple
+									bind:value={ownershipValues}
+								>
+									{#each ownership as { label, value } (value)}
+										<Option {value}>
+											{label}
+										</Option>
+									{/each}
+								</AutoComplete>
+								<div class="flex flex-wrap gap-3">
+									{#each ownershipValues as ownership}
+										<Badge variant="outline">
+											{ownership.label}
+										</Badge>
+									{/each}
+								</div>
+								<AutoComplete
+									placeholder="Degree"
+									label="Degree"
+									required
+									name="degree"
+									let:Option
+									multiple
+									bind:value={degreeValues}
+								>
+									{#each degrees as { label, value } (value)}
+										<Option {value}>
+											{label}
+										</Option>
+									{/each}
+								</AutoComplete>
+								<div class="flex flex-wrap gap-3">
+									{#each degreeValues as degree}
+										<Badge variant="outline">
+											{degree.label}
+										</Badge>
+									{/each}
+								</div>
+								<Footer>
+									<Button variant="accent" class="ml-auto">Apply</Button>
+								</Footer>
+							</form>
 						</Details>
 					</Disclosure>
-
-					<!-- multipleAutocomplete - tryb - zdalny/stacjonarny multipleAutocomplete - miasto
-			multipleAutocomplete - typ uczelni - prywatna/publiczna/niepubliczne multipleAutocomplete -
-			stopień -
-			inźynierskie/licencjackie/magisterskie/jednoliteMagisterskie/podyplomowe/doktoranckie
-			multipleAutocomplete - kierunki -->
 				</Card>
 				<Universities />
 				<div class="w-full flex-1 h-px p-4" />
