@@ -104,6 +104,7 @@
 								value={$page.url.searchParams.get('search')}
 								placeholder="Share a Bit About Yourself or Dive into University Search"
 								required
+								minlength={6}
 							>
 								<Stars slot="prefix" size="16" />
 							</Input>

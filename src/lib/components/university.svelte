@@ -7,5 +7,5 @@
 </script>
 
 <Card>
-	<h4>{data.name}</h4>
+	<h4>{data[1]}</h4>
 </Card>
