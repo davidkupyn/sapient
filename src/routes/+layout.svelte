@@ -84,11 +84,11 @@
 
 <footer
 	class={cn(
-		'border-muted z-[0] w-full bottom-0',
-		$page.url.pathname === '/' ? 'fixed' : 'border-t'
+		'border-muted z-[0] w-full mt-8 bg-background',
+		$page.url.pathname === '/' ? '' : 'border-t'
 	)}
 >
-	<div class="container mx-auto flex justify-between items-center px-6 h-14">
+	<div class="container mx-auto flex justify-between items-center px-6 h-14 relative bottom-0">
 		<span class="mx-auto text-sm text-muted-foreground font-medium">&copy Techni Schools</span>
 	</div>
 </footer>

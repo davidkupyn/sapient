@@ -41,7 +41,7 @@
 
 <script lang="ts">
 	import { cn } from '$lib/helpers';
-	import { Loader2 } from 'lucide-svelte';
+	import { ExternalLink, Loader2 } from 'lucide-svelte';
 	import type { Action } from 'svelte/action';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
@@ -132,6 +132,9 @@
 			</span>
 		{:else}
 			<slot />
+			{#if external}
+				<ExternalLink size="16" />
+			{/if}
 		{/if}
 	</svelte:element>
 {/if}

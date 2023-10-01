@@ -5,7 +5,7 @@
 	import { fly } from 'svelte/transition';
 	import { readableFormState } from '../../routes/+page.svelte';
 	import { Loader2 } from 'lucide-svelte';
-
+	import Skeleton from './ui/skeleton.svelte';
 	$: universities = $page.data.universities as UniversityType[];
 	$: console.log($readableFormState);
 </script>
@@ -19,7 +19,11 @@
 	{#if $readableFormState === 'done'}
 		<div class="hidden only:flex">Nie znaleziono</div>
 	{:else if $readableFormState === 'busy'}
-		skeleton
+		{#each { length: 3 } as _, idx (idx)}
+			<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
+				<Skeleton class="rounded-2xl w-full h-[4.5rem]" />
+			</div>
+		{/each}
 	{:else if $readableFormState === 'idle'}
 		<div class="hidden only:flex">Wyszukaj cos, jeszcze nie pisales</div>
 	{/if}
