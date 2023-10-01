@@ -1,16 +1,52 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button.svelte';
-	import { Card } from '$lib/components/ui/card/index.js';
+	import { Card } from '$lib/components/ui/card';
+	import { AutoComplete } from '$lib/components/ui/auto-complete';
 	import { Input } from '$lib/components/ui/input';
 	import { Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
 	import { superForm } from 'sveltekit-superforms/client';
+	import Badge from '$lib/components/ui/badge.svelte';
+	import { Disclosure } from '$lib/components/ui/disclosure';
 
 	export let data;
-
+	let modeValues: { label: string; value?: string }[] = [];
+	let cityValues: { label: string; value?: string }[] = [];
+	let ownershipValues: { label: string; value?: string }[] = [];
+	let degreeValues: { label: string; value?: string }[] = [];
+	let accordionValue = '';
 	let mounted = false;
 	const { form, errors, enhance } = superForm(data.form);
+
+	const modes = [
+		{ label: 'stacjonarne', value: 'stacjonarne' },
+		{ label: 'zdalne', value: 'zdalne' }
+	];
+	const cities = [
+		{ label: 'Warszawa', value: 'Warszawa' },
+		{ label: 'Kraków', value: 'Kraków' },
+		{ label: 'Łódź', value: 'Łódź' },
+		{ label: 'Wrocław', value: 'Wrocław' },
+		{ label: 'Poznań', value: 'Poznań' },
+		{ label: 'Gdańsk', value: 'Gdańsk' },
+		{ label: 'Szczecin', value: 'Szczecin' },
+		{ label: 'Bydgoszcz', value: 'Bydgoszcz' },
+		{ label: 'Lublin', value: 'Lublin' }
+	];
+	const ownership = [
+		{ label: 'publiczna', value: 'publiczna' },
+		{ label: 'prywatna', value: 'prywatna' },
+		{ label: 'niepubliczna', value: 'niepubliczna' }
+	];
+	const degrees = [
+		{ label: 'inżynierskie', value: 'inżynierskie' },
+		{ label: 'licencjackie', value: 'licencjackie' },
+		{ label: 'magisterskie', value: 'magisterskie' },
+		{ label: 'jednolite magisterskie', value: 'jednolite magisterskie' },
+		{ label: 'podyplomowe', value: 'podyplomowe' },
+		{ label: 'doktoranckie', value: 'doktoranckie' }
+	];
 
 	onMount(() => (mounted = true));
 
@@ -116,8 +152,106 @@
 				</div>
 			{/if}
 		</div>
+		<Card class="w-full max-w-xl">
+			<Disclosure let:Summary let:Details bind:value={accordionValue}>
+				<Summary>Filtry</Summary>
+				<Details class="flex gap-4 flex-col">
+					<AutoComplete
+						placeholder="Tryb Nauczania"
+						label="Tryb Nauczania"
+						required
+						let:Option
+						multiple
+						bind:value={modeValues}
+					>
+						{#each modes as { label, value } (value)}
+							<Option {value}>
+								{label}
+							</Option>
+						{/each}
+					</AutoComplete>
+					<div class="flex flex-wrap gap-3">
+						{#each modeValues as mode}
+							<Badge>
+								{mode.label}
+							</Badge>
+						{/each}
+					</div>
+					<AutoComplete
+						placeholder="Miasto"
+						label="Miasto"
+						required
+						let:Option
+						multiple
+						bind:value={cityValues}
+					>
+						{#each cities as { label, value } (value)}
+							<Option {value}>
+								{label}
+							</Option>
+						{/each}
+					</AutoComplete>
+					<div class="flex flex-wrap gap-3">
+						{#each cityValues as city}
+							<Badge>
+								{city.label}
+							</Badge>
+						{/each}
+					</div>
+					<AutoComplete
+						placeholder="Typ Uczelni"
+						label="Typ Uczelni"
+						required
+						let:Option
+						multiple
+						bind:value={ownershipValues}
+					>
+						{#each ownership as { label, value } (value)}
+							<Option {value}>
+								{label}
+							</Option>
+						{/each}
+					</AutoComplete>
+					<div class="flex flex-wrap gap-3">
+						{#each ownershipValues as ownership}
+							<Badge>
+								{ownership.label}
+							</Badge>
+						{/each}
+					</div>
+					<AutoComplete
+						placeholder="Stopień"
+						label="Stopień"
+						required
+						let:Option
+						multiple
+						bind:value={degreeValues}
+					>
+						{#each degrees as { label, value } (value)}
+							<Option {value}>
+								{label}
+							</Option>
+						{/each}
+					</AutoComplete>
+					<div class="flex flex-wrap gap-3">
+						{#each degreeValues as degree}
+							<Badge>
+								{degree.label}
+							</Badge>
+						{/each}
+					</div>
+				</Details>
+			</Disclosure>
+
+			<!-- multipleAutocomplete - tryb - zdalny/stacjonarny multipleAutocomplete - miasto
+			multipleAutocomplete - typ uczelni - prywatna/publiczna/niepubliczne multipleAutocomplete -
+			stopień -
+			inźynierskie/licencjackie/magisterskie/jednoliteMagisterskie/podyplomowe/doktoranckie
+			multipleAutocomplete - kierunki -->
+		</Card>
 		<!-- <div
 			class=" absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] w-full h-screen dark:to-accent-500/40 to-accent-500/75 z-50 from-background/0 via-background/0 bottom-0"
 		/> -->
+		<div />
 	</main>
 {/key}
