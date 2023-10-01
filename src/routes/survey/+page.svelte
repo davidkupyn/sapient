@@ -4,22 +4,21 @@
 </script>
 
 <script lang="ts">
-	import { fade, scale, fly } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 	import {
 		CardSorter,
-		swipeDispatcher,
 		lastCardSorterAction,
+		swipeDispatcher,
 		undoSwipeDispatcher,
 		type SwipeActionType
 	} from '$lib/components/card-sorter/index';
-	import { Check, HelpCircle, InfoIcon, X } from 'lucide-svelte';
+	import ControlsInfoModal from '$lib/components/controls-info-modal.svelte';
 	import Button from '$lib/components/ui/button.svelte';
-	import { cn, getMetakey } from '$lib/helpers';
-	import { Modal } from '$lib/components/ui/modal';
-	import Kbd from '$lib/components/ui/kbd.svelte';
+	import { cn } from '$lib/helpers';
+	import { Check, HelpCircle, InfoIcon, X } from 'lucide-svelte';
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 	import { readonly, writable } from 'svelte/store';
+	import { fade, fly, scale } from 'svelte/transition';
 
 	export let data;
 	let actions: { type: SwipeActionType; id: number | string }[] = [];
@@ -176,32 +175,4 @@
 	</div>
 </main>
 
-<Modal alert let:Content bind:open={isInfoModalOpen} type="info" crossButton closeOnOutsideClick>
-	<Content let:Header let:Footer class="max-w-md" let:close>
-		<Header let:Title let:Description>
-			<Title>Interactive Controls Guide</Title>
-			<Description class="">
-				<p class="mb-2">
-					This page features interactive cards that you can navigate using various controls:
-				</p>
-				<ul class="list-disc list-inside pl-2">
-					<li>Swipe left for 'No'</li>
-					<li>Swipe right for 'Yes'</li>
-					<li>
-						Use arrow keys for navigation
-
-						<Kbd class="ml-1">←</Kbd>
-						<Kbd>→</Kbd>
-					</li>
-				</ul>
-				<p class="mt-4">
-					To undo your last action, you can either press <Kbd>{getMetakey()} + Z</Kbd>, or simply
-					click the 'Undo' button.
-				</p>
-			</Description>
-		</Header>
-		<Footer>
-			<Button melt={close} variant="accent">Understood</Button>
-		</Footer>
-	</Content>
-</Modal>
+<ControlsInfoModal bind:open={isInfoModalOpen} />
