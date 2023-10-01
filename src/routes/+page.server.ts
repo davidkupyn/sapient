@@ -2,7 +2,6 @@ import type { University } from '$lib/types';
 
 export async function load({ url }) {
 	const searchQuery = url.searchParams.get('search');
-
 	// const mode = url.searchParams.has('mode')
 	// 	? JSON.parse(url.searchParams.get('mode') || '')
 	// 	: undefined;
@@ -16,7 +15,7 @@ export async function load({ url }) {
 	// 	? JSON.parse(url.searchParams.get('degree') || '')
 	// 	: undefined;
 
-	if (searchQuery) {
+	if (searchQuery && searchQuery.length > 5) {
 		try {
 			const searchJSON = await fetch(`https://sapient-api.kupyn.dev/search?q="${searchQuery}"`);
 			const universities = (await searchJSON.json()) as University[];
