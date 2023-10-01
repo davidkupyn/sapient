@@ -1,11 +1,12 @@
-import { exploreSchema } from '$lib/schemas/explore.js';
+import { exploreSchema } from '$lib/schemas';
+import type { University } from '$lib/types';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 
 export async function load() {
 	const form = await superValidate(exploreSchema);
 
-	return { form };
+	return { form, universities: [{ name: 'Techni Schools' }, { name: 'Vizja' }] as University[] };
 }
 
 export const actions = {

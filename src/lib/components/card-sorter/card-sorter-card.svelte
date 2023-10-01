@@ -23,7 +23,7 @@
 
 	swipeDispatcher.addListenerOnMount((type) => {
 		if (!isTop) return;
-
+		console.log(type);
 		swipeAction(type);
 	});
 
@@ -42,17 +42,10 @@
 		});
 		upcomingAction = type;
 
-		if (type === 'bottom') {
-			$position = {
-				x: 0,
-				y: 800
-			};
-		} else {
-			$position = {
-				x: type === 'left' ? -800 : 800,
-				y: $position.y
-			};
-		}
+		$position = {
+			x: type === 'left' ? -800 : 800,
+			y: 0
+		};
 
 		if (browser && upcomingAction) position.stiffness = window.innerWidth > 768 ? 0.2 : 0.04;
 		swiped = true;
@@ -81,28 +74,18 @@
 		class={className}
 		use:draggable={{
 			position: $position,
-			bounds: { top: 80, bottom: -1200, left: -1200, right: -1200 },
+			bounds: { top: 80, bottom: 80, left: -1200, right: -1200 },
 
 			onDrag: (data) => {
 				if (data.offsetX > horizontalBound) upcomingAction = 'right';
-				if (data.offsetX < -horizontalBound) upcomingAction = 'left';
-				if (
-					data.offsetY > verticalBound &&
-					data.offsetX < horizontalBound &&
-					data.offsetX > -horizontalBound
-				)
-					upcomingAction = 'bottom';
+				else if (data.offsetX < -horizontalBound) upcomingAction = 'left';
+				else upcomingAction = undefined;
 
 				$position = { x: data.offsetX, y: data.offsetY };
 			},
 			onDragEnd: () => {
 				if ($position.x > horizontalBound || $position.x < -horizontalBound) {
 					swipeAction($position.x > horizontalBound ? 'right' : 'left');
-				} else if (
-					$position.y > verticalBound &&
-					($position.x < horizontalBound || $position.x > -horizontalBound)
-				) {
-					swipeAction('bottom');
 				} else {
 					resetSwipe();
 				}

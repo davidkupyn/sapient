@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade, scale } from 'svelte/transition';
+	import { fade, scale, fly } from 'svelte/transition';
 	import {
 		CardSorter,
 		swipeDispatcher,
@@ -18,7 +18,8 @@
 	let actions: { type: SwipeActionType; id: number | string }[] = [];
 	let reset = 0;
 	let isInfoModalOpen = false;
-
+	let previousQuestions: (typeof data.firstQuestion)[] = [];
+	let result: string[] = [];
 	onMount(() => {
 		const isInfoModalShown = sessionStorage.getItem('info-modal-shown');
 		if (isInfoModalShown === 'true') {
@@ -31,13 +32,34 @@
 
 	let swipeNextCard = swipeDispatcher.dispatch;
 	let undoSwipe = undoSwipeDispatcher.dispatch;
+	let currentQuestion = data.firstQuestion;
+
+	function setNextQuestions() {
+		if (actions.length === 0) return data.firstQuestion;
+
+		const lastAction = actions[actions.length - 1];
+		if (currentQuestion.options[lastAction.type].options) {
+			previousQuestions = [...previousQuestions, currentQuestion];
+			return currentQuestion.options[lastAction.type];
+		}
+
+		result = currentQuestion.options[lastAction.type].result;
+		return currentQuestion;
+	}
+	function handleUndo() {
+		console.log(actions);
+		console.log(actions.length);
+		if (actions.length === 0) {
+			cards = [data.firstQuestion];
+		}
+	}
+	$: cards = [...previousQuestions, currentQuestion];
 </script>
 
 <svelte:window
 	on:keydown={(e) => {
 		if (e.key === 'ArrowLeft') swipeNextCard('left');
 		if (e.key === 'ArrowRight') swipeNextCard('right');
-		if (e.key === 'ArrowDown') swipeNextCard('bottom');
 		if (e.key === 'z' && (e.metaKey || e.ctrlKey)) undoSwipe();
 	}}
 />
@@ -66,48 +88,78 @@
 				transition:fade={{ duration: 300 }}
 				class="pointer-events-none aspect-[1/3] z-20 max-h-full sm:aspect-[3/5] w-full sm:w-1/2 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] right-0 from-success-500/50 via-success-500/0 dark:from-success-500/30 dark:via-success-500/0 absolute top-1/2 -translate-y-1/2"
 			/>
-		{:else if $lastCardSorterAction === 'bottom'}
-			<div
-				transition:fade={{ duration: 300 }}
-				class="pointer-events-none aspect-[3/1] sm:aspect-[4/1] z-20 max-w-full w-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] bottom-0 from-accent-500/50 via-accent-500/0 dark:from-accent-500/30 dark:via-accent-500/0 absolute left-1/2 -translate-x-1/2"
-			/>
 		{/if}
 		<div>
 			{#key reset}
 				<div in:fade={{ duration: 150 }}>
-					<CardSorter cards={data.questions} bind:actions let:Placeholder>
+					<CardSorter
+						{cards}
+						bind:actions
+						let:Placeholder
+						on:swipe={() => (currentQuestion = setNextQuestions())}
+						on:undo={() => handleUndo()}
+					>
 						<div
+							in:scale|global={{ start: 0.8, duration: 200 }}
 							slot="card"
 							let:card
 							class={cn(
-								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] grid bg-muted place-content-center transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
+								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] flex bg-muted items-center justify-center text-center p-4 transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
 							)}
 						>
 							{card.question}
 						</div>
-						<Placeholder class="w-60 h-80 md:w-72 md:h-96 grid place-content-center">
-							<span>empty</span>
+						<Placeholder
+							class="w-full h-80 md:h-96 max-w-md flex flex-col items-center justify-center"
+						>
+							{#if result.length}
+								<h2 class="font-semibold leading-none mb-1.5 text-center tracking-tight">
+									Perfect Match!
+								</h2>
+								<p class="text-sm text-muted-foreground mb-8 text-center">
+									It's time to find your perfect major. We've narrowed it down to three options.
+									Take a moment to reflect and choose the one that resonates with you the most.
+								</p>
+								<div class="flex-col flex gap-4 w-full mb-8">
+									{#each result as major, idx (major)}
+										<a
+											in:fly|global={{
+												y: 150,
+												duration: 300,
+												delay: idx === 0 ? 150 : (idx + 1) * 75
+											}}
+											class="rounded-2xl bg-card w-full text-card-foreground hover:ring-accent transition duration-200 outline-none focus-visible:ring-accent ring-1 ring-foreground/10 shadow p-6 grid gap-6"
+											href="/?search={encodeURI(major)}"
+										>
+											{major}
+										</a>
+									{/each}
+								</div>
+								<div in:scale={{ start: 0.8, duration: 200 }}>
+									<Button variant="link">Back to Home</Button>
+								</div>
+							{/if}
 						</Placeholder>
 					</CardSorter>
 				</div>
 			{/key}
 		</div>
-		<div class="space-y-4">
-			<div class="mt-16 flex gap-4 mx-auto">
-				<Button class="w-full" variant="outline" on:click={() => swipeNextCard('left')}>
-					<X class="text-error" size="20" />
-					No
-				</Button>
-				<Button class="w-full" variant="outline" on:click={() => swipeNextCard('right')}>
-					<Check class="text-success" size="20" />
-					Yes
-				</Button>
+		{#if !result.length}
+			<div class="space-y-4">
+				<div class="mt-16 flex gap-4 mx-auto">
+					<Button class="w-full" variant="outline" on:click={() => swipeNextCard('left')}>
+						<X class="text-error" size="20" />
+						No
+					</Button>
+					<Button class="w-full" variant="outline" on:click={() => swipeNextCard('right')}>
+						<Check class="text-success" size="20" />
+						Yes
+					</Button>
+				</div>
+
+				<Button variant="text" class="w-full mx-auto" on:click={() => undoSwipe()}>Undo</Button>
 			</div>
-			<Button variant="outline" class="w-full mx-auto" on:click={() => swipeNextCard('bottom')}
-				>Skip</Button
-			>
-			<Button variant="text" class="w-full mx-auto" on:click={() => undoSwipe()}>Undo</Button>
-		</div>
+		{/if}
 	</div>
 </main>
 

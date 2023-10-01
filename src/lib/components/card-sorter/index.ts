@@ -2,7 +2,7 @@ import { createDispatcher, createProtectedStore } from '$lib/helpers';
 import { readonly } from 'svelte/store';
 
 export { default as CardSorter } from './card-sorter-root.svelte';
-export type SwipeActionType = 'left' | 'right' | 'bottom';
+export type SwipeActionType = 'left' | 'right';
 type SwipeAction = (type: SwipeActionType) => void;
 export const swipeDispatcher = createDispatcher<SwipeAction>();
 export const undoSwipeDispatcher = createDispatcher<() => void>();
