@@ -114,10 +114,10 @@
 							slot="card"
 							let:card
 							class={cn(
-								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] flex bg-muted items-center justify-center gap-8 text-center flex-col p-4 transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
+								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] flex bg-[#EDEDEE] dark:bg-muted items-center justify-center gap-8 text-center flex-col p-4 transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
 							)}
 						>
-							<HelpCircle class="text-muted-foreground" size="36" />
+							<HelpCircle class="text-accent" size="36" />
 							<p class="mb-16">
 								{card.question}
 							</p>
@@ -149,7 +149,7 @@
 									{/each}
 								</div>
 								<div in:scale={{ start: 0.8, duration: 200 }}>
-									<Button variant="link">Back to Home</Button>
+									<Button href="/" variant="link">Back to Home</Button>
 								</div>
 							{/if}
 						</Placeholder>

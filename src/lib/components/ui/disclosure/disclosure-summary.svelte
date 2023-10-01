@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ctx } from '.';
 	import { cn } from '$lib/helpers';
-	import { ChevronRight, ChevronUp } from 'lucide-svelte';
+	import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-svelte';
 	import { buttonStyles } from '../button.svelte';
 
 	export let arrow = true;
@@ -21,14 +21,15 @@
 		!$unstyled &&
 			buttonStyles({
 				variant: 'ghost',
-				className: 'active:scale-100 w-full group data-[state=open]:text-foreground'
+				className:
+					'active:scale-100 w-full group data-[state=open]:text-foreground data-[state=open]:bg-background hover:data-[state=open]:bg-muted data-[state=open]:shadow-none'
 			}),
 		className
 	)}
 >
 	<slot />
 	{#if arrow}
-		<ChevronUp
+		<ChevronDown
 			size="16"
 			class="h-4 w-4 ml-auto text-accent-fo transition-[transform] group-data-[state=open]:rotate-180 group-data-[state=open]:transform"
 		/>

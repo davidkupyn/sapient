@@ -86,7 +86,11 @@
 				<div class="flex flex-col gap-1 w-full max-w-xl items-center">
 					<div class="flex gap-2 mb-1.5 w-full">
 						{#each $readableResults as result}
-							<Badge subtle variant="accent" href="/?search={encodeURI(result)}">{result}</Badge>
+							<Badge
+								subtle
+								variant={$page.url.searchParams.get('search') === result ? 'accent' : 'outline'}
+								href="/?search={encodeURI(result)}">{result}</Badge
+							>
 						{/each}
 					</div>
 					<form
@@ -97,6 +101,7 @@
 							<Input
 								autocomplete="off"
 								name="search"
+								value={$page.url.searchParams.get('search')}
 								placeholder="Share Your Interests, Goals, and Preferences"
 								required
 							>
@@ -113,7 +118,9 @@
 							Explore Now
 						</Button>
 						<p class="sm:hidden flex items-center gap-1 text-sm/6 text-muted-foreground">
-							Not sure yet? Take a <Button variant="link" class="p-0">quick survey!</Button>
+							Not sure yet? Take a <Button href="/survey" variant="link" class="p-0"
+								>quick survey!</Button
+							>
 						</p>
 					</form>
 				</div>
@@ -158,7 +165,7 @@
 			{/if}
 		</div>
 		{#if currentView === 'search'}
-			<div class="w-full flex mx-auto px-6 container gap-5 max-xl:flex-col max-xl:max-w-xl">
+			<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl">
 				<Card class="w-full h-fit flex-1 p-4" let:Footer>
 					<Disclosure let:Summary let:Details>
 						<Summary>Filter</Summary>
@@ -255,14 +262,13 @@
 									{/each}
 								</div>
 								<Footer>
-									<Button variant="accent" class="ml-auto">Apply</Button>
+									<Button variant="secondary" class="ml-auto">Apply</Button>
 								</Footer>
 							</form>
 						</Details>
 					</Disclosure>
 				</Card>
 				<Universities />
-				<div class="w-full flex-1 h-px p-4" />
 			</div>
 		{/if}
 	</main>

@@ -10,7 +10,7 @@
 				outline:
 					'shadow dark:shadow-black ring-1 ring-base-950/5 focus-visible:border-border border border-transparent dark:border-border text-foreground hover:bg-border focus-visible:ring-border',
 				secondary:
-					'bg-base-200/90 hover:bg-muted dark:bg-base-900/70 dark:hover:bg-muted focus-visible:ring-border shadow-[inset_0_1px_0_#ffffff0f]',
+					'bg-base-200/90 hover:bg-muted dark:bg-base-900/70 dark:hover:bg-muted text-foreground focus-visible:ring-border shadow-[inset_0_1px_0_#ffffff0f]',
 				error:
 					'[text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] hover:brightness-95 dark:hover:brightness-90 bg-gradient-to-b from-error to-error-focus text-error-foreground focus-visible:ring-error-focus shadow-[inset_0_1px_0_#ffffff5d,inset_0_-1px_0_#00000015,0_1px_3px_0_rgb(0_0_0_/_0.1),_0_1px_2px_-1px_rgb(0_0_0_/_0.1)]',
 				accent:
@@ -21,7 +21,7 @@
 					'hover:brightness-95 dark:hover:brightness-90 bg-gradient-to-b from-warning-focus to-warning text-warning-foreground focus-visible:ring-warning-focus shadow-[inset_0_1px_0_#ffffff5d,inset_0_-1px_0_#00000015,0_1px_3px_0_rgb(0_0_0_/_0.1),_0_1px_2px_-1px_rgb(0_0_0_/_0.1)]',
 				info: '[text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] hover:brightness-95 dark:hover:brightness-90 bg-gradient-to-b from-info to-info-focus text-info-foreground focus-visible:ring-info-focus shadow-[inset_0_1px_0_#ffffff5d,inset_0_-1px_0_#00000015,0_1px_3px_0_rgb(0_0_0_/_0.1),_0_1px_2px_-1px_rgb(0_0_0_/_0.1)]',
 				ghost:
-					'hover:bg-base-300/50 dark:hover:bg-base-800/50 text-muted-foreground focus-visible:text-foreground dark:focus-visible:text-base-300 hover:text-foreground aria-pressed:text-foreground focus-visible:ring-border hover:shadow-[inset_0_1px_0_#ffffff0f] data-[state=open]:bg-muted data-[state=open]:text-foreground data-[state=open]:shadow-[inset_0_1px_0_#ffffff0f]',
+					'hover:bg-muted dark:hover:bg-base-800/50 text-muted-foreground focus-visible:text-foreground dark:focus-visible:text-base-300 hover:text-foreground aria-pressed:text-foreground focus-visible:ring-border hover:shadow-[inset_0_1px_0_#ffffff0f] data-[state=open]:bg-muted data-[state=open]:text-foreground data-[state=open]:shadow-[inset_0_1px_0_#ffffff0f]',
 				text: 'text-muted-foreground focus-visible:text-foreground hover:text-foreground aria-pressed:text-foreground data-[selected]:text-foreground data-[state=active]:text-foreground aria-pressed:underline underline-offset-4 data-[state=active]:underline focus-visible:ring-offset-0 focus-visible:ring-border',
 				link: '[text-shadow:_0_1px_0.5px_rgb(0_0_0_/_10%)] underline-offset-4 underline text-accent hover:text-accent-focus focus-visible:ring-accent'
 			},
