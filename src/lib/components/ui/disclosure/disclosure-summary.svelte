@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ctx } from '.';
 	import { cn } from '$lib/helpers';
-	import { ChevronRight } from 'lucide-svelte';
+	import { ChevronRight, ChevronUp } from 'lucide-svelte';
 	import { buttonStyles } from '../button.svelte';
 
 	export let arrow = true;
@@ -28,9 +28,9 @@
 >
 	<slot />
 	{#if arrow}
-		<ChevronRight
+		<ChevronUp
 			size="16"
-			class="h-4 w-4 ml-auto text-accent-fo transition-[transform] group-data-[state=open]:rotate-90 group-data-[state=open]:transform"
+			class="h-4 w-4 ml-auto text-accent-fo transition-[transform] group-data-[state=open]:rotate-180 group-data-[state=open]:transform"
 		/>
 	{/if}
 </button>

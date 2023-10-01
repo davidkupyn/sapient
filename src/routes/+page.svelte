@@ -18,7 +18,9 @@
 	let ownershipValues: { label: string; value?: string }[] = [];
 	let degreeValues: { label: string; value?: string }[] = [];
 	let mounted = false;
-	const { form, errors, enhance } = superForm(data.form);
+	const { form, errors, enhance } = superForm(data.form, {
+		taintedMessage: null
+	});
 
 	const modes = [
 		{ label: 'Full-time', value: 'full-time' },
@@ -83,39 +85,45 @@
 				Just tell us your goals and skills, or take a quick survey. We'll help you find the perfect
 				university and major. Let's get started!
 			</p>
-			{$readableResults}
 			{#if currentView === 'search'}
-				<form
-					method="POST"
-					use:enhance
-					in:scale|global={{ duration: 400, start: 0.9 }}
-					class="w-full max-w-xl flex items-center sm:items-start gap-4 max-sm:flex-col"
-				>
-					<div class="w-full flex flex-col gap-1">
-						<Input
-							autocomplete="off"
-							name="description"
-							placeholder="Share Your Interests, Goals, and Preferences"
-							bind:value={$form.description}
-							error={$errors.description?.join(', ')}
-							required
-						>
-							<Stars slot="prefix" size="16" />
-						</Input>
-						<p class="ml-4 max-sm:hidden flex items-center gap-1 text-sm/6 text-muted-foreground">
-							Not sure yet? Take a <Button variant="link" href="/survey" class="p-0"
-								>quick survey!</Button
-							>
-						</p>
+				<div class="flex flex-col gap-1 w-full items-center">
+					<div class="flex gap-2 mb-1.5">
+						{#each $readableResults as result}
+							<Badge subtle variant="accent" href="/?search={encodeURI(result)}">{result}</Badge>
+						{/each}
 					</div>
-					<Button class="max-sm:w-full" type="submit" variant="accent">
-						<Search size="16" />
-						Explore Now
-					</Button>
-					<p class="sm:hidden flex items-center gap-1 text-sm/6 text-muted-foreground">
-						Not sure yet? Take a <Button variant="link" class="p-0">quick survey!</Button>
-					</p>
-				</form>
+					<form
+						method="POST"
+						use:enhance
+						in:scale|global={{ duration: 400, start: 0.9 }}
+						class="w-full max-w-xl flex items-center sm:items-start gap-4 max-sm:flex-col"
+					>
+						<div class="w-full flex flex-col gap-1">
+							<Input
+								autocomplete="off"
+								name="description"
+								placeholder="Share Your Interests, Goals, and Preferences"
+								bind:value={$form.description}
+								error={$errors.description?.join(', ')}
+								required
+							>
+								<Stars slot="prefix" size="16" />
+							</Input>
+							<p class="ml-4 max-sm:hidden flex items-center gap-1 text-sm/6 text-muted-foreground">
+								Not sure yet? Take a <Button variant="link" href="/survey" class="p-0"
+									>quick survey!</Button
+								>
+							</p>
+						</div>
+						<Button class="max-sm:w-full" type="submit" variant="accent">
+							<Search size="16" />
+							Explore Now
+						</Button>
+						<p class="sm:hidden flex items-center gap-1 text-sm/6 text-muted-foreground">
+							Not sure yet? Take a <Button variant="link" class="p-0">quick survey!</Button>
+						</p>
+					</form>
+				</div>
 			{:else if currentView === 'survey'}
 				<div in:scale|global={{ duration: 400, start: 0.9 }}>
 					<Card let:Header let:Footer class="flex flex-col gap-6 items-center max-w-md">
@@ -176,9 +184,9 @@
 									</Option>
 								{/each}
 							</AutoComplete>
-							<div class="flex flex-wrap gap-3">
+							<div class="flex flex-wrap gap-2">
 								{#each modeValues as mode}
-									<Badge>
+									<Badge variant="outline">
 										{mode.label}
 									</Badge>
 								{/each}
@@ -199,7 +207,7 @@
 							</AutoComplete>
 							<div class="flex flex-wrap gap-3">
 								{#each cityValues as city}
-									<Badge>
+									<Badge variant="outline">
 										{city.label}
 									</Badge>
 								{/each}
@@ -220,7 +228,7 @@
 							</AutoComplete>
 							<div class="flex flex-wrap gap-3">
 								{#each ownershipValues as ownership}
-									<Badge>
+									<Badge variant="outline">
 										{ownership.label}
 									</Badge>
 								{/each}
@@ -241,7 +249,7 @@
 							</AutoComplete>
 							<div class="flex flex-wrap gap-3">
 								{#each degreeValues as degree}
-									<Badge>
+									<Badge variant="outline">
 										{degree.label}
 									</Badge>
 								{/each}
