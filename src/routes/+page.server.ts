@@ -26,5 +26,5 @@ export async function load({ url }) {
 		}
 	}
 
-	return { universities: [] as University[] };
+	return { fetchState: '', universities: [] as University[] };
 }
