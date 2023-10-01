@@ -42,7 +42,7 @@
 	];
 </script>
 
-<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl">
+<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl max-sm:px-6">
 	{#if $page.data.universities.length}
 		<Card class="w-full h-fit flex-1 p-4" let:Footer>
 			<Disclosure let:Summary let:Details>

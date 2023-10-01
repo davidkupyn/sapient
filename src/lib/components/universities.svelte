@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import type { University as UniversityType } from '$lib/types';
+	import { SearchX } from 'lucide-svelte';
 	import { fly } from 'svelte/transition';
 	import { readableFormState } from '../../routes/+page.svelte';
-	import { Ban, GraduationCap, Loader2, SearchX } from 'lucide-svelte';
 	import Skeleton from './ui/skeleton.svelte';
 	import University from './university.svelte';
 
 	$: universities = $page.data.universities as UniversityType[];
-	$: console.log(universities);
 </script>
 
-<div class="flex flex-col w-full max-w-xl gap-4">
+<div class="flex flex-col w-full max-w-xl gap-4 max-sm:px-6">
 	{#if universities && $readableFormState !== 'busy'}
 		{#each universities as university, idx (idx)}
 			<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
@@ -22,7 +21,7 @@
 	{#if $readableFormState === 'done'}
 		<div class="hidden only:flex gap-6 flex-col items-center">
 			<SearchX class="text-accent" size="36" />
-			<p class="text-center max-w-sm">
+			<p class="text-center max-w-xs w-full">
 				Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
 				different way.
 			</p>

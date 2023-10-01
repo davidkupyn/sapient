@@ -24,10 +24,18 @@
 	// map over cards and set some as swiped if card.swiped is true
 	let swipedCards: {
 		[id: string]: boolean;
-	} = cards.reduce((acc, card) => {
-		acc[card.id] = card.swiped ?? false;
-		return acc;
-	}, {});
+	} = cards.reduce(
+		(
+			acc: {
+				[id: string]: boolean;
+			},
+			card
+		) => {
+			acc[card.id] = card.swiped ?? false;
+			return acc;
+		},
+		{}
+	);
 	function findTopId(swipedCards: { [id: string]: boolean }) {
 		for (const [id, swiped] of Object.entries(swipedCards).reverse()) {
 			if (!swiped) {

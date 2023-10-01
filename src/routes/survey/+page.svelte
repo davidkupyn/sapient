@@ -4,12 +4,10 @@
 </script>
 
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import {
 		CardSorter,
 		lastCardSorterAction,
 		swipeDispatcher,
-		undoSwipeDispatcher,
 		type SwipeActionType
 	} from '$lib/components/card-sorter/index';
 	import ControlsInfoModal from '$lib/components/controls-info-modal.svelte';
@@ -37,7 +35,6 @@
 	});
 
 	let swipeNextCard = swipeDispatcher.dispatch;
-	let undoSwipe = undoSwipeDispatcher.dispatch;
 	let currentQuestion = data.firstQuestion;
 
 	function setNextQuestions() {
@@ -49,17 +46,12 @@
 
 			return currentQuestion.options[lastAction.type];
 		}
+		if (currentQuestion.options[lastAction.type].result)
+			$result = currentQuestion.options[lastAction.type].result;
 
-		$result = currentQuestion.options[lastAction.type].result;
 		return currentQuestion;
 	}
-	function handleUndo() {
-		console.log(actions);
-		console.log(actions.length);
-		if (actions.length === 0) {
-			cards = [data.firstQuestion];
-		}
-	}
+
 	$: cards = [...previousQuestions, currentQuestion];
 </script>
 
@@ -103,7 +95,6 @@
 						bind:actions
 						let:Placeholder
 						on:swipe={(e) => (currentQuestion = setNextQuestions())}
-						on:undo={() => handleUndo()}
 					>
 						<div
 							in:scale|global={{ start: 0.8, duration: 200 }}

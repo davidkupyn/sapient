@@ -19,7 +19,6 @@
 		disabled,
 		defaultChecked: checked,
 		onCheckedChange: ({ next }) => {
-			console.log(next);
 			checked = next;
 			dispatch('change', next);
 			return next;

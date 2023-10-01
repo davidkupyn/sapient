@@ -20,7 +20,6 @@
 	export let data;
 
 	let mounted = false;
-	let searchQuery = $page.url.searchParams.get('search');
 	let currentView: 'search' | 'survey';
 
 	onMount(() => {
@@ -69,7 +68,6 @@
 					<form
 						in:scale|global={{ duration: 400, start: 0.9 }}
 						on:submit={() => {
-							if (searchQuery && searchQuery.length < 6) return;
 							formState.set('busy');
 						}}
 						class="w-full max-w-xl flex items-center sm:items-start gap-4 max-sm:flex-col"
@@ -78,34 +76,12 @@
 							<Input
 								autocomplete="off"
 								name="search"
-								bind:value={searchQuery}
+								value={$page.url.searchParams.get('search') ?? ''}
 								placeholder="Share a Bit About Yourself or Dive into University Search"
 								required
-								data-invalid={!!searchQuery && searchQuery.length < 5 ? 'true' : undefined}
 								minlength={5}
 							>
 								<Stars slot="prefix" size="16" />
-								<Button
-									href={(() => {
-										const url = new URL($page.url.href);
-										url.searchParams.set('search', '');
-										return url.toString();
-									})()}
-									slot="suffix"
-									size="icon"
-									on:click={() => {
-										searchQuery = '';
-									}}
-									variant="text"
-									class={cn(
-										'px-0 py-0 -mr-2.5',
-										searchQuery
-											? 'scale-100 opacity-100 pointer-events-auto'
-											: 'scale-50 opacity-0 pointer-events-none'
-									)}
-								>
-									<X size="16" />
-								</Button>
 							</Input>
 							<p class="ml-4 max-sm:hidden flex items-center gap-1 text-sm/6 text-muted-foreground">
 								Not sure yet? Take a <Button variant="link" href="/survey" class="p-0"

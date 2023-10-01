@@ -23,7 +23,6 @@
 
 	swipeDispatcher.addListenerOnMount((type) => {
 		if (!isTop) return;
-		console.log(type);
 		swipeAction(type);
 	});
 
