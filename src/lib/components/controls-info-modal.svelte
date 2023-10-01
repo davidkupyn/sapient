@@ -1,5 +1,4 @@
 <script>
-	import { getMetakey } from '$lib/helpers';
 	import Button from './ui/button.svelte';
 	import Kbd from './ui/kbd.svelte';
 	import { Modal } from './ui/modal';
@@ -12,7 +11,7 @@
 			<Title>Interactive Controls Guide</Title>
 			<Description class="">
 				<p class="mb-2">
-					This page features interactive cards that you can navigate using various controls:
+					`` This page features interactive cards that you can navigate using various controls:
 				</p>
 				<ul class="list-disc list-inside pl-2">
 					<li>Swipe left for 'No'</li>
@@ -24,10 +23,6 @@
 						<Kbd>→</Kbd>
 					</li>
 				</ul>
-				<p class="mt-4">
-					To undo your last action, you can either press <Kbd>{getMetakey()} + Z</Kbd>, or simply
-					click the 'Undo' button.
-				</p>
 			</Description>
 		</Header>
 		<Footer>

@@ -46,6 +46,7 @@
 		const lastAction = actions[actions.length - 1];
 		if (currentQuestion.options[lastAction.type].options) {
 			previousQuestions = [...previousQuestions, currentQuestion];
+
 			return currentQuestion.options[lastAction.type];
 		}
 
@@ -66,7 +67,6 @@
 	on:keydown={(e) => {
 		if (e.key === 'ArrowLeft') swipeNextCard('left');
 		if (e.key === 'ArrowRight') swipeNextCard('right');
-		if (e.key === 'z' && (e.metaKey || e.ctrlKey)) undoSwipe();
 	}}
 />
 
@@ -102,10 +102,7 @@
 						{cards}
 						bind:actions
 						let:Placeholder
-						on:swipe={(e) => {
-							if (e.detail === 'left' && actions.length === 0) goto('/');
-							else currentQuestion = setNextQuestions();
-						}}
+						on:swipe={(e) => (currentQuestion = setNextQuestions())}
 						on:undo={() => handleUndo()}
 					>
 						<div
@@ -168,8 +165,6 @@
 						Yes
 					</Button>
 				</div>
-
-				<Button variant="text" class="w-full mx-auto" on:click={() => undoSwipe()}>Undo</Button>
 			</div>
 		{/if}
 	</div>
