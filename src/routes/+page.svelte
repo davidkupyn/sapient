@@ -21,8 +21,8 @@
 	const { form, errors, enhance } = superForm(data.form);
 
 	const modes = [
-		{ label: 'stacjonarne', value: 'stacjonarne' },
-		{ label: 'zdalne', value: 'zdalne' }
+		{ label: 'Full-time', value: 'full-time' },
+		{ label: 'Remote', value: 'remote' }
 	];
 	const cities = [
 		{ label: 'Warszawa', value: 'Warszawa' },
@@ -36,17 +36,17 @@
 		{ label: 'Lublin', value: 'Lublin' }
 	];
 	const ownership = [
-		{ label: 'publiczna', value: 'publiczna' },
-		{ label: 'prywatna', value: 'prywatna' },
-		{ label: 'niepubliczna', value: 'niepubliczna' }
+		{ label: 'public', value: 'public' },
+		{ label: 'private', value: 'private' },
+		{ label: 'non-public', value: 'non-public' }
 	];
 	const degrees = [
-		{ label: 'inżynierskie', value: 'inżynierskie' },
-		{ label: 'licencjackie', value: 'licencjackie' },
-		{ label: 'magisterskie', value: 'magisterskie' },
-		{ label: 'jednolite magisterskie', value: 'jednolite magisterskie' },
-		{ label: 'podyplomowe', value: 'podyplomowe' },
-		{ label: 'doktoranckie', value: 'doktoranckie' }
+		{ label: "Engineer's", value: "engineer's" },
+		{ label: "Bachelor's", value: "bachelor's" },
+		{ label: "Master's", value: "master's" },
+		{ label: "Integrated Master's", value: "integrated master's" },
+		{ label: 'Postgraduate', value: 'postgraduate' },
+		{ label: 'Doctoral', value: 'doctoral' }
 	];
 
 	onMount(() => (mounted = true));
@@ -157,11 +157,11 @@
 		</div>
 		<Card class="w-full max-w-xl">
 			<Disclosure let:Summary let:Details bind:value={accordionValue}>
-				<Summary>Filtry</Summary>
+				<Summary>Filter</Summary>
 				<Details class="flex gap-4 flex-col">
 					<AutoComplete
-						placeholder="Tryb Nauczania"
-						label="Tryb Nauczania"
+						placeholder="Study form"
+						label="Study form"
 						required
 						let:Option
 						multiple
@@ -181,8 +181,8 @@
 						{/each}
 					</div>
 					<AutoComplete
-						placeholder="Miasto"
-						label="Miasto"
+						placeholder="City"
+						label="City"
 						required
 						let:Option
 						multiple
@@ -202,8 +202,8 @@
 						{/each}
 					</div>
 					<AutoComplete
-						placeholder="Typ Uczelni"
-						label="Typ Uczelni"
+						placeholder="Type of university"
+						label="Type of university"
 						required
 						let:Option
 						multiple
@@ -223,8 +223,8 @@
 						{/each}
 					</div>
 					<AutoComplete
-						placeholder="Stopień"
-						label="Stopień"
+						placeholder="Degree"
+						label="Degree"
 						required
 						let:Option
 						multiple
