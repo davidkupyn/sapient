@@ -1,3 +1,8 @@
+<script lang="ts" context="module">
+	const formState = writable<'idle' | 'busy' | 'done'>();
+	export const readableFormState = readonly(formState);
+</script>
+
 <script lang="ts">
 	import Button from '$lib/components/ui/button.svelte';
 	import { Card } from '$lib/components/ui/card';
@@ -11,6 +16,7 @@
 	import { Disclosure } from '$lib/components/ui/disclosure';
 	import { readableResults } from './survey/+page.svelte';
 	import { page } from '$app/stores';
+	import { readonly, writable } from 'svelte/store';
 
 	export let data;
 	let modeValues: { label: string; value?: string }[] = [];
@@ -95,6 +101,9 @@
 					</div>
 					<form
 						in:scale|global={{ duration: 400, start: 0.9 }}
+						on:submit={() => {
+							formState.set('busy');
+						}}
 						class="w-full max-w-xl flex items-center sm:items-start gap-4 max-sm:flex-col"
 					>
 						<div class="w-full flex flex-col gap-1">

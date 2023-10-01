@@ -12,4 +12,7 @@
 			<University data={university} />
 		</div>
 	{/each}
+	{#if !!$page.url.searchParams.get('search')}
+		<div class="hidden only:flex">Nie mo</div>
+	{/if}
 </div>
