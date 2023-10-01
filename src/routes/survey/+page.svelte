@@ -1,3 +1,8 @@
+<script lang="ts" context="module">
+	const result = writable<string[]>([]);
+	export const readableResults = readonly(result);
+</script>
+
 <script lang="ts">
 	import { fade, scale, fly } from 'svelte/transition';
 	import {
@@ -13,14 +18,16 @@
 	import { Modal } from '$lib/components/ui/modal';
 	import Kbd from '$lib/components/ui/kbd.svelte';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { readonly, writable } from 'svelte/store';
 
 	export let data;
 	let actions: { type: SwipeActionType; id: number | string }[] = [];
 	let reset = 0;
 	let isInfoModalOpen = false;
 	let previousQuestions: (typeof data.firstQuestion)[] = [];
-	let result: string[] = [];
 	onMount(() => {
+		$result = [];
 		const isInfoModalShown = sessionStorage.getItem('info-modal-shown');
 		if (isInfoModalShown === 'true') {
 			isInfoModalOpen = false;
@@ -43,7 +50,7 @@
 			return currentQuestion.options[lastAction.type];
 		}
 
-		result = currentQuestion.options[lastAction.type].result;
+		$result = currentQuestion.options[lastAction.type].result;
 		return currentQuestion;
 	}
 	function handleUndo() {
@@ -96,7 +103,10 @@
 						{cards}
 						bind:actions
 						let:Placeholder
-						on:swipe={() => (currentQuestion = setNextQuestions())}
+						on:swipe={(e) => {
+							if (e.detail === 'left' && actions.length === 0) goto('/');
+							else currentQuestion = setNextQuestions();
+						}}
 						on:undo={() => handleUndo()}
 					>
 						<div
@@ -112,7 +122,7 @@
 						<Placeholder
 							class="w-full h-80 md:h-96 max-w-md flex flex-col items-center justify-center"
 						>
-							{#if result.length}
+							{#if $result.length}
 								<h2 class="font-semibold leading-none mb-1.5 text-center tracking-tight">
 									Perfect Match!
 								</h2>
@@ -121,7 +131,7 @@
 									Take a moment to reflect and choose the one that resonates with you the most.
 								</p>
 								<div class="flex-col flex gap-4 w-full mb-8">
-									{#each result as major, idx (major)}
+									{#each $result as major, idx (major)}
 										<a
 											in:fly|global={{
 												y: 150,
@@ -144,7 +154,7 @@
 				</div>
 			{/key}
 		</div>
-		{#if !result.length}
+		{#if !$result.length}
 			<div class="space-y-4">
 				<div class="mt-16 flex gap-4 mx-auto">
 					<Button class="w-full" variant="outline" on:click={() => swipeNextCard('left')}>
@@ -174,13 +184,11 @@
 				<ul class="list-disc list-inside pl-2">
 					<li>Swipe left for 'No'</li>
 					<li>Swipe right for 'Yes'</li>
-					<li>Swipe down to skip</li>
 					<li>
 						Use arrow keys for navigation
 
 						<Kbd class="ml-1">←</Kbd>
 						<Kbd>→</Kbd>
-						<Kbd>↓</Kbd>
 					</li>
 				</ul>
 				<p class="mt-4">

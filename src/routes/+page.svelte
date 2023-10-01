@@ -10,6 +10,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import Badge from '$lib/components/ui/badge.svelte';
 	import { Disclosure } from '$lib/components/ui/disclosure';
+	import { readableResults } from './survey/+page.svelte';
 
 	export let data;
 	let modeValues: { label: string; value?: string }[] = [];
@@ -83,6 +84,7 @@
 				Just tell us your goals and skills, or take a quick survey. We'll help you find the perfect
 				university and major. Let's get started!
 			</p>
+			{$readableResults}
 			{#if currentView === 'search'}
 				<form
 					method="POST"
