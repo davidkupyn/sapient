@@ -20,8 +20,8 @@ export async function load({ url }) {
 		const searchJSON = await fetch(`https://sapient-api.kupyn.dev/search?q='${searchQuery}'`);
 		console.log(searchJSON.json());
 
-		return { universities: [] as University[] };
+		return { fetchState: '', universities: (await searchJSON.json()) as University[] };
 	}
 
-	return { universities: [] as University[] };
+	return { fetchState: '', universities: [] as University[] };
 }

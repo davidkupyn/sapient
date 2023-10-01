@@ -7,12 +7,12 @@
 	import { Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
-	import { superForm } from 'sveltekit-superforms/client';
 	import Badge from '$lib/components/ui/badge.svelte';
 	import { Disclosure } from '$lib/components/ui/disclosure';
 	import { readableResults } from './survey/+page.svelte';
 	import { page } from '$app/stores';
 
+	export let data;
 	let modeValues: { label: string; value?: string }[] = [];
 	let cityValues: { label: string; value?: string }[] = [];
 	let ownershipValues: { label: string; value?: string }[] = [];
@@ -102,8 +102,9 @@
 								autocomplete="off"
 								name="search"
 								value={$page.url.searchParams.get('search')}
-								placeholder="Share Your Interests, Goals, and Preferences"
+								placeholder="Share a Bit About Yourself or Dive into University Search"
 								required
+								minlength={6}
 							>
 								<Stars slot="prefix" size="16" />
 							</Input>
@@ -166,108 +167,110 @@
 		</div>
 		{#if currentView === 'search'}
 			<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl">
-				<Card class="w-full h-fit flex-1 p-4" let:Footer>
-					<Disclosure let:Summary let:Details>
-						<Summary>Filter</Summary>
-						<Details class="mt-4 pb-2">
-							<form class="flex gap-2 flex-col">
-								<input type="hidden" name="search" value={$page.url.searchParams.get('search')} />
+				{#if data.universities.length}
+					<Card class="w-full h-fit flex-1 p-4" let:Footer>
+						<Disclosure let:Summary let:Details>
+							<Summary>Filter</Summary>
+							<Details class="mt-4 pb-2">
+								<form class="flex gap-2 flex-col">
+									<input type="hidden" name="search" value={$page.url.searchParams.get('search')} />
 
-								<AutoComplete
-									placeholder="Study form"
-									label="Study form"
-									required
-									name="mode"
-									let:Option
-									multiple
-									bind:value={modeValues}
-								>
-									{#each modes as { label, value } (value)}
-										<Option {value}>
-											{label}
-										</Option>
-									{/each}
-								</AutoComplete>
-								<div class="flex flex-wrap gap-2">
-									{#each modeValues as mode}
-										<Badge variant="outline">
-											{mode.label}
-										</Badge>
-									{/each}
-								</div>
-								<AutoComplete
-									placeholder="City"
-									name="city"
-									label="City"
-									required
-									let:Option
-									multiple
-									bind:value={cityValues}
-								>
-									{#each cities as { label, value } (value)}
-										<Option {value}>
-											{label}
-										</Option>
-									{/each}
-								</AutoComplete>
-								<div class="flex flex-wrap gap-3">
-									{#each cityValues as city}
-										<Badge variant="outline">
-											{city.label}
-										</Badge>
-									{/each}
-								</div>
-								<AutoComplete
-									placeholder="Type of university"
-									label="Type of university"
-									name="type"
-									required
-									let:Option
-									multiple
-									bind:value={ownershipValues}
-								>
-									{#each ownership as { label, value } (value)}
-										<Option {value}>
-											{label}
-										</Option>
-									{/each}
-								</AutoComplete>
-								<div class="flex flex-wrap gap-3">
-									{#each ownershipValues as ownership}
-										<Badge variant="outline">
-											{ownership.label}
-										</Badge>
-									{/each}
-								</div>
-								<AutoComplete
-									placeholder="Degree"
-									label="Degree"
-									required
-									name="degree"
-									let:Option
-									multiple
-									bind:value={degreeValues}
-								>
-									{#each degrees as { label, value } (value)}
-										<Option {value}>
-											{label}
-										</Option>
-									{/each}
-								</AutoComplete>
-								<div class="flex flex-wrap gap-3">
-									{#each degreeValues as degree}
-										<Badge variant="outline">
-											{degree.label}
-										</Badge>
-									{/each}
-								</div>
-								<Footer>
-									<Button variant="secondary" class="ml-auto">Apply</Button>
-								</Footer>
-							</form>
-						</Details>
-					</Disclosure>
-				</Card>
+									<AutoComplete
+										placeholder="Study form"
+										label="Study form"
+										required
+										name="mode"
+										let:Option
+										multiple
+										bind:value={modeValues}
+									>
+										{#each modes as { label, value } (value)}
+											<Option {value}>
+												{label}
+											</Option>
+										{/each}
+									</AutoComplete>
+									<div class="flex flex-wrap gap-2">
+										{#each modeValues as mode}
+											<Badge variant="outline">
+												{mode.label}
+											</Badge>
+										{/each}
+									</div>
+									<AutoComplete
+										placeholder="City"
+										name="city"
+										label="City"
+										required
+										let:Option
+										multiple
+										bind:value={cityValues}
+									>
+										{#each cities as { label, value } (value)}
+											<Option {value}>
+												{label}
+											</Option>
+										{/each}
+									</AutoComplete>
+									<div class="flex flex-wrap gap-3">
+										{#each cityValues as city}
+											<Badge variant="outline">
+												{city.label}
+											</Badge>
+										{/each}
+									</div>
+									<AutoComplete
+										placeholder="Type of university"
+										label="Type of university"
+										name="type"
+										required
+										let:Option
+										multiple
+										bind:value={ownershipValues}
+									>
+										{#each ownership as { label, value } (value)}
+											<Option {value}>
+												{label}
+											</Option>
+										{/each}
+									</AutoComplete>
+									<div class="flex flex-wrap gap-3">
+										{#each ownershipValues as ownership}
+											<Badge variant="outline">
+												{ownership.label}
+											</Badge>
+										{/each}
+									</div>
+									<AutoComplete
+										placeholder="Degree"
+										label="Degree"
+										required
+										name="degree"
+										let:Option
+										multiple
+										bind:value={degreeValues}
+									>
+										{#each degrees as { label, value } (value)}
+											<Option {value}>
+												{label}
+											</Option>
+										{/each}
+									</AutoComplete>
+									<div class="flex flex-wrap gap-3">
+										{#each degreeValues as degree}
+											<Badge variant="outline">
+												{degree.label}
+											</Badge>
+										{/each}
+									</div>
+									<Footer>
+										<Button variant="secondary" class="ml-auto">Apply</Button>
+									</Footer>
+								</form>
+							</Details>
+						</Disclosure>
+					</Card>
+				{/if}
 				<Universities />
 			</div>
 		{/if}
