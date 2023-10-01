@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	const formState = writable<'idle' | 'busy' | 'done'>();
+	const formState = writable<'idle' | 'busy' | 'done' | 'error'>();
 	export const readableFormState = readonly(formState);
 </script>
 
@@ -81,8 +81,8 @@
 								bind:value={searchQuery}
 								placeholder="Share a Bit About Yourself or Dive into University Search"
 								required
-								data-invalid={searchQuery && searchQuery.length < 6}
-								minlength={6}
+								data-invalid={!!searchQuery && searchQuery.length < 5 ? 'true' : undefined}
+								minlength={5}
 							>
 								<Stars slot="prefix" size="16" />
 								<Button
