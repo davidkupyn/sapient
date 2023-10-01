@@ -3,6 +3,7 @@
 	import { Card } from './ui/card';
 
 	export let data: University;
+	console.log(data);
 </script>
 
 <Card>
