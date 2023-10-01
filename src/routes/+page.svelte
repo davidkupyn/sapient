@@ -63,6 +63,8 @@
 		const actionChoice = localStorage.getItem('action-choice') as 'search' | 'survey';
 		currentView = actionChoice ? 'search' : 'survey';
 	});
+
+	$: formState.set(data.fetchState);
 </script>
 
 {#key mounted}
@@ -123,7 +125,13 @@
 								>
 							</p>
 						</div>
-						<Button class="max-sm:w-full" type="submit" variant="accent">
+						<Button
+							class="max-sm:w-full"
+							type="submit"
+							variant="accent"
+							loading={$readableFormState === 'busy'}
+							disabled={$readableFormState === 'busy'}
+						>
 							<Search size="16" />
 							Explore Now
 						</Button>

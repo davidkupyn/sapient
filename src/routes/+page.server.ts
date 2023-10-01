@@ -20,11 +20,12 @@ export async function load({ url }) {
 		try {
 			const searchJSON = await fetch(`https://sapient-api.kupyn.dev/search?q="${searchQuery}"`);
 			const universities = (await searchJSON.json()) as University[];
-			return { universities };
+			return { fetchState: 'done' as const, universities };
 		} catch (error) {
 			console.error(error);
+			return { fetchState: 'done' as const, universities: [] as University[] };
 		}
 	}
 
-	return { fetchState: '', universities: [] as University[] };
+	return { fetchState: 'idle' as const, universities: [] as University[] };
 }
