@@ -3,6 +3,7 @@
 	import { Card } from '$lib/components/ui/card';
 	import { AutoComplete } from '$lib/components/ui/auto-complete';
 	import { Input } from '$lib/components/ui/input';
+	import Universities from '$lib/components/universities.svelte';
 	import { Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
@@ -53,6 +54,7 @@
 	let currentView: 'search' | 'survey';
 
 	onMount(() => {
+		mounted = true;
 		const actionChoice = localStorage.getItem('action-choice') as 'search' | 'survey';
 		currentView = actionChoice ? 'search' : 'survey';
 	});
@@ -60,7 +62,7 @@
 
 {#key mounted}
 	<main
-		class="z-10 flex h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-12 pb-9 relative"
+		class="z-10 flex min-h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-8 sm:gap-16 pb-9 relative"
 	>
 		<div class="p-6 flex flex-col justify-center items-center gap-8">
 			<h1
@@ -76,12 +78,11 @@
 			</h1>
 			<p
 				in:fade={{ duration: 400 }}
-				class="text-center mb-6 text-sm [text-wrap:balance] bg-clip-text max-w-2xl text-transparent transition-all delay-500 duration-1000 bg-gradient-to-t from-base-700 to-base-500 dark:from-base-400 dark:to-base-50 md:text-lg selection:text-foreground"
+				class="text-center mb-6 text-sm [text-wrap:balance] bg-clip-text max-w-xl text-transparent transition-all delay-500 duration-1000 bg-gradient-to-t from-base-700 to-base-500 dark:from-base-400 dark:to-base-50 md:text-lg selection:text-foreground"
 			>
 				Just tell us your goals and skills, or take a quick survey. We'll help you find the perfect
 				university and major. Let's get started!
 			</p>
-
 			{#if currentView === 'search'}
 				<form
 					method="POST"
@@ -118,9 +119,9 @@
 				<div in:scale|global={{ duration: 400, start: 0.9 }}>
 					<Card let:Header let:Footer class="flex flex-col gap-6 items-center max-w-md">
 						<Header let:Title let:Description>
-							<Title class="text-center">
+							<Title class="text-center dark:tracking-wide">
 								Unsure about your
-								<span class="text-accent dark:tracking-wide">ideal major?</span>
+								<span class="text-accent">ideal major?</span>
 							</Title>
 							<Description class="text-center">
 								Answer a few simple questions to find out which field of study suites you the best!
@@ -150,6 +151,8 @@
 						</Footer>
 					</Card>
 				</div>
+			{:else}
+				<div class="h-[8.75rem] sm:h-[4.75rem]" />
 			{/if}
 		</div>
 		<Card class="w-full max-w-xl">

@@ -6,7 +6,7 @@
 	import { Menu } from '$lib/components/ui/menu';
 	import Separator from '$lib/components/ui/separator.svelte';
 	import { cn } from '$lib/helpers';
-	import { Monitor, Moon, Sun } from 'lucide-svelte';
+	import { BrainCircuit, Monitor, Moon, Sun } from 'lucide-svelte';
 	import '../app.postcss';
 </script>
 
@@ -31,8 +31,9 @@
 		<a
 			href="/"
 			aria-label="Go to home page"
-			class="font-bold flex items-center gap-3 -ml-2 p-1 focus-visible:ring-2 focus-visible:outline-none rounded-lg transition ring-offset-base-50 dark:ring-offset-base-950 focus-visible:ring-primary-600"
+			class="font-bold flex items-center gap-2 -ml-2 p-1 focus-visible:ring-2 focus-visible:outline-none rounded-lg transition ring-offset-base-50 dark:ring-offset-base-950 focus-visible:ring-primary-600"
 		>
+			<BrainCircuit size="20" class="text-accent dark:text-foreground" />
 			Sapient
 		</a>
 		<nav>
@@ -80,10 +81,6 @@
 </header>
 
 <slot />
-<!-- 
-<div
-	class="pointer-events-none absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center w-full h-screen bottom-0 bg-gradient-to-b from-accent-500/50 dark:from-accent-600/25 via-accent-500/5 dark:via-accent-900/5 to-background/0 dark:to-background/0"
-/> -->
 
 <footer
 	class={cn(
@@ -92,13 +89,6 @@
 	)}
 >
 	<div class="container mx-auto flex justify-between items-center px-6 h-14">
-		<span class="mx-auto text-sm text-muted-foreground">
-			<span class="mr-1.5">&copy</span><a
-				href="https://github.com/davidkupyn"
-				target="_blank"
-				class="font-medium border-b border-opacity-0 dark:border-opacity-0 border-base-500 dark:border-base-400 hover:border-opacity-100 dark:hover:border-opacity-100 transition"
-				>Techni Schools</a
-			>
-		</span>
+		<span class="mx-auto text-sm text-muted-foreground font-medium">&copy Techni Schools</span>
 	</div>
 </footer>
