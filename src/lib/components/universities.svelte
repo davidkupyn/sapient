@@ -12,7 +12,7 @@
 </script>
 
 <div class="flex flex-col w-full max-w-xl gap-4">
-	{#if universities}
+	{#if universities && $readableFormState !== 'busy'}
 		{#each universities as university, idx (idx)}
 			<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
 				<University data={university} />
