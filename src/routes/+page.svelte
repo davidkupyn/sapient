@@ -17,7 +17,6 @@
 	let cityValues: { label: string; value?: string }[] = [];
 	let ownershipValues: { label: string; value?: string }[] = [];
 	let degreeValues: { label: string; value?: string }[] = [];
-	let accordionValue = '';
 	let mounted = false;
 	const { form, errors, enhance } = superForm(data.form);
 
@@ -63,7 +62,7 @@
 
 {#key mounted}
 	<main
-		class="z-10 flex min-h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-8 sm:gap-16 pb-9 relative"
+		class="z-10 flex min-h-[calc(100dvh)] justify-start items-center flex-col pt-24 md:pt-32 gap-6 sm:gap-16 pb-9 relative"
 	>
 		<div class="p-6 flex flex-col justify-center items-center gap-8">
 			<h1
@@ -157,106 +156,108 @@
 				<div class="h-[8.75rem] sm:h-[4.75rem]" />
 			{/if}
 		</div>
-		<Card class="w-full max-w-xl">
-			<Disclosure let:Summary let:Details bind:value={accordionValue}>
-				<Summary>Filter</Summary>
-				<Details class="flex gap-4 flex-col">
-					<AutoComplete
-						placeholder="Study form"
-						label="Study form"
-						required
-						let:Option
-						multiple
-						bind:value={modeValues}
-					>
-						{#each modes as { label, value } (value)}
-							<Option {value}>
-								{label}
-							</Option>
-						{/each}
-					</AutoComplete>
-					<div class="flex flex-wrap gap-3">
-						{#each modeValues as mode}
-							<Badge>
-								{mode.label}
-							</Badge>
-						{/each}
-					</div>
-					<AutoComplete
-						placeholder="City"
-						label="City"
-						required
-						let:Option
-						multiple
-						bind:value={cityValues}
-					>
-						{#each cities as { label, value } (value)}
-							<Option {value}>
-								{label}
-							</Option>
-						{/each}
-					</AutoComplete>
-					<div class="flex flex-wrap gap-3">
-						{#each cityValues as city}
-							<Badge>
-								{city.label}
-							</Badge>
-						{/each}
-					</div>
-					<AutoComplete
-						placeholder="Type of university"
-						label="Type of university"
-						required
-						let:Option
-						multiple
-						bind:value={ownershipValues}
-					>
-						{#each ownership as { label, value } (value)}
-							<Option {value}>
-								{label}
-							</Option>
-						{/each}
-					</AutoComplete>
-					<div class="flex flex-wrap gap-3">
-						{#each ownershipValues as ownership}
-							<Badge>
-								{ownership.label}
-							</Badge>
-						{/each}
-					</div>
-					<AutoComplete
-						placeholder="Degree"
-						label="Degree"
-						required
-						let:Option
-						multiple
-						bind:value={degreeValues}
-					>
-						{#each degrees as { label, value } (value)}
-							<Option {value}>
-								{label}
-							</Option>
-						{/each}
-					</AutoComplete>
-					<div class="flex flex-wrap gap-3">
-						{#each degreeValues as degree}
-							<Badge>
-								{degree.label}
-							</Badge>
-						{/each}
-					</div>
-				</Details>
-			</Disclosure>
+		{#if currentView === 'search'}
+			<div class="w-full flex mx-auto px-6 container gap-5 max-xl:flex-col max-xl:max-w-xl">
+				<Card class="w-full h-fit flex-1 p-4">
+					<Disclosure let:Summary let:Details>
+						<Summary>Filter</Summary>
+						<Details class="flex gap-2 flex-col mt-4 pb-2">
+							<AutoComplete
+								placeholder="Study form"
+								label="Study form"
+								required
+								let:Option
+								multiple
+								bind:value={modeValues}
+							>
+								{#each modes as { label, value } (value)}
+									<Option {value}>
+										{label}
+									</Option>
+								{/each}
+							</AutoComplete>
+							<div class="flex flex-wrap gap-3">
+								{#each modeValues as mode}
+									<Badge>
+										{mode.label}
+									</Badge>
+								{/each}
+							</div>
+							<AutoComplete
+								placeholder="City"
+								label="City"
+								required
+								let:Option
+								multiple
+								bind:value={cityValues}
+							>
+								{#each cities as { label, value } (value)}
+									<Option {value}>
+										{label}
+									</Option>
+								{/each}
+							</AutoComplete>
+							<div class="flex flex-wrap gap-3">
+								{#each cityValues as city}
+									<Badge>
+										{city.label}
+									</Badge>
+								{/each}
+							</div>
+							<AutoComplete
+								placeholder="Type of university"
+								label="Type of university"
+								required
+								let:Option
+								multiple
+								bind:value={ownershipValues}
+							>
+								{#each ownership as { label, value } (value)}
+									<Option {value}>
+										{label}
+									</Option>
+								{/each}
+							</AutoComplete>
+							<div class="flex flex-wrap gap-3">
+								{#each ownershipValues as ownership}
+									<Badge>
+										{ownership.label}
+									</Badge>
+								{/each}
+							</div>
+							<AutoComplete
+								placeholder="Degree"
+								label="Degree"
+								required
+								let:Option
+								multiple
+								bind:value={degreeValues}
+							>
+								{#each degrees as { label, value } (value)}
+									<Option {value}>
+										{label}
+									</Option>
+								{/each}
+							</AutoComplete>
+							<div class="flex flex-wrap gap-3">
+								{#each degreeValues as degree}
+									<Badge>
+										{degree.label}
+									</Badge>
+								{/each}
+							</div>
+						</Details>
+					</Disclosure>
 
-			<!-- multipleAutocomplete - tryb - zdalny/stacjonarny multipleAutocomplete - miasto
+					<!-- multipleAutocomplete - tryb - zdalny/stacjonarny multipleAutocomplete - miasto
 			multipleAutocomplete - typ uczelni - prywatna/publiczna/niepubliczne multipleAutocomplete -
 			stopień -
 			inźynierskie/licencjackie/magisterskie/jednoliteMagisterskie/podyplomowe/doktoranckie
 			multipleAutocomplete - kierunki -->
-		</Card>
-		<!-- <div
-			class=" absolute flex p-6 md:p-12 gap-8 justify-center max-sm:flex-col max-sm:items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] w-full h-screen dark:to-accent-500/40 to-accent-500/75 z-50 from-background/0 via-background/0 bottom-0"
-		/> -->
-		<div />
+				</Card>
+				<Universities />
+				<div class="w-full flex-1 h-px p-4" />
+			</div>
+		{/if}
 	</main>
 {/key}

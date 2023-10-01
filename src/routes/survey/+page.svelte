@@ -12,7 +12,7 @@
 		undoSwipeDispatcher,
 		type SwipeActionType
 	} from '$lib/components/card-sorter/index';
-	import { Check, HelpCircle, X } from 'lucide-svelte';
+	import { Check, HelpCircle, InfoIcon, X } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import { cn, getMetakey } from '$lib/helpers';
 	import { Modal } from '$lib/components/ui/modal';
@@ -81,7 +81,7 @@
 		Let's Blitz through some Questions!
 
 		<Button on:click={() => (isInfoModalOpen = true)} size="icon" variant="text" aria-hidden>
-			<HelpCircle size="20" />
+			<InfoIcon size="20" />
 		</Button>
 	</h1>
 	<div class="grid h-fit">
@@ -114,10 +114,13 @@
 							slot="card"
 							let:card
 							class={cn(
-								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] flex bg-muted items-center justify-center text-center p-4 transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
+								'dark:shadow-[inset_0_2px_0_#ffffff0f,inset_0_-2px_0_#ffffff0f] shadow-[inset_0_2px_0_#0000000f,inset_0_-2px_0_#0000000f] flex bg-muted items-center justify-center gap-8 text-center flex-col p-4 transition ease-out rounded-xl w-60 h-80 md:w-72 md:h-96'
 							)}
 						>
-							{card.question}
+							<HelpCircle class="text-muted-foreground" size="36" />
+							<p class="mb-16">
+								{card.question}
+							</p>
 						</div>
 						<Placeholder
 							class="w-full h-80 md:h-96 max-w-md flex flex-col items-center justify-center"

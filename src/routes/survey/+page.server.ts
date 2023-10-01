@@ -6,41 +6,38 @@ export async function load({ fetch }) {
 	// console.log(questions);
 	return {
 		firstQuestion: {
-			id: 'youReady',
-			question: 'Are you ready to choose your educational path',
+			id: 'root',
+			question: 'Are you ready to choose your educational path?',
 			options: {
 				right: {
-					id: 'root',
-					question: 'Czy interesujesz się nauką?',
+					id: 'fromRoot',
+					question: 'Are you interested in science?',
 					options: {
 						right: {
 							id: 'scienceInterest',
-							question: 'Czy lubisz matematykę?',
+							question: 'Do you like mathematics?',
 							options: {
 								right: {
 									id: 'mathInterest',
-									question: 'Czy chciałbyś pracować jako inżynier?',
+									question: 'Would you like to work as an engineer?',
 									options: {
 										right: {
-											result: [
-												'Kierunek: Inżynieria Elektryczna',
-												'Kierunek: Inżynieria Mechaniczna'
-											]
+											result: ['Electrical Engineering', 'Mechanical Engineering']
 										},
 										left: {
-											result: ['Kierunek: Matematyka Stosowana', 'Kierunek: Statystyka']
+											result: ['Applied Mathematics', 'Statistics']
 										}
 									}
 								},
 								left: {
 									id: 'noMathInterest',
-									question: 'Czy interesujesz się biologią?',
+									question: 'Are you interested in biology?',
 									options: {
 										right: {
-											result: ['Kierunek: Biologia Molekularna', 'Kierunek: Biotechnologia']
+											result: ['Molecular Biology', 'Biotechnology']
 										},
 										left: {
-											result: ['Kierunek: Fizyka', 'Kierunek: Chemia']
+											result: ['Physics', 'Chemistry']
 										}
 									}
 								}
@@ -48,29 +45,29 @@ export async function load({ fetch }) {
 						},
 						left: {
 							id: 'noScienceInterest',
-							question: 'Czy lubisz sztukę?',
+							question: 'Do you like art?',
 							options: {
 								right: {
 									id: 'artInterest',
-									question: 'Czy chciałbyś pracować jako artysta?',
+									question: 'Would you like to work as an artist?',
 									options: {
 										right: {
-											result: ['Kierunek: Sztuki Piękne', 'Kierunek: Grafika']
+											result: ['Fine Arts', 'Graphic Design']
 										},
 										left: {
-											result: ['Kierunek: Historia Sztuki', 'Kierunek: Fotografia']
+											result: ['Art History', 'Photography']
 										}
 									}
 								},
 								left: {
 									id: 'noArtInterest',
-									question: 'Czy chciałbyś pracować z ludźmi?',
+									question: 'Would you like to work with people?',
 									options: {
 										right: {
-											result: ['Kierunek: Psychologia', 'Kierunek: Socjologia']
+											result: ['Psychology', 'Sociology']
 										},
 										left: {
-											result: ['Kierunek: Informatyka', 'Kierunek: Zarządzanie']
+											result: ['Computer Science', 'Management']
 										}
 									}
 								}
