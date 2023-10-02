@@ -5,17 +5,19 @@
 
 <script lang="ts">
 	import { page } from '$app/stores';
-	import SearchView from '$lib/components/search-view.svelte';
+	import SearchView from '$lib/components/filter-card.svelte';
 	import SurveyViewCard from '$lib/components/survey-view-card.svelte';
 	import Badge from '$lib/components/ui/badge.svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import { Input } from '$lib/components/ui/input';
-	import { Search, Stars, X } from 'lucide-svelte';
+	import { Search, SearchX, Stars, X } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { readonly, writable } from 'svelte/store';
-	import { fade, scale } from 'svelte/transition';
+	import { fade, scale, fly } from 'svelte/transition';
 	import { readableResults } from './survey/+page.svelte';
 	import { cn } from '$lib/helpers';
+	import Skeleton from '$lib/components/ui/skeleton.svelte';
+	import University from '$lib/components/university.svelte';
 
 	export let data;
 
@@ -113,7 +115,45 @@
 			{/if}
 		</div>
 		{#if currentView === 'search'}
-			<SearchView />
+			{#await data.universities}
+				loading
+			{:then univ}
+				jest
+			{/await}
+			<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl max-sm:px-6">
+				<SearchView />
+				{#await data.universities}
+					{#each { length: 3 } as _, idx (idx)}
+						<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
+							<Skeleton class="rounded-2xl w-full h-[4.5rem]" />
+						</div>
+					{/each}
+				{:then universities}
+					{#each universities as university, idx (idx)}
+						<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
+							<University data={university} />
+						</div>
+					{:else}
+						{#if $page.url.searchParams.has('search')}
+							<div class="hidden only:flex gap-6 flex-col items-center">
+								<SearchX class="text-accent" size="36" />
+								<p class="text-center max-w-xs w-full">
+									Unfortunately, we weren't able to find anything for you. Perhaps try searching in
+									a different way.
+								</p>
+							</div>
+						{/if}
+					{/each}
+				{:catch _}
+					<div class="hidden only:flex gap-6 flex-col items-center">
+						<SearchX class="text-accent" size="36" />
+						<p class="text-center max-w-xs w-full">
+							Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
+							different way.
+						</p>
+					</div>
+				{/await}
+			</div>
 		{/if}
 	</main>
 {/key}

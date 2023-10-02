@@ -11,7 +11,7 @@
 </script>
 
 <div class="flex flex-col w-full max-w-xl gap-4">
-	{#if universities && $readableFormState !== 'busy'}
+	<!-- {#if universities && $readableFormState !== 'busy'}
 		{#each universities as university, idx (idx)}
 			<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
 				<University data={university} />
@@ -32,5 +32,37 @@
 				<Skeleton class="rounded-2xl w-full h-[4.5rem]" />
 			</div>
 		{/each}
-	{/if}
+	{/if} -->
+
+	{#await $page.data.universities}
+		{#each { length: 3 } as _, idx (idx)}
+			<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
+				<Skeleton class="rounded-2xl w-full h-[4.5rem]" />
+			</div>
+		{/each}
+	{:then universities}
+		{#each universities as university, idx (idx)}
+			<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
+				<University data={university} />
+			</div>
+		{:else}
+			{#if $page.url.searchParams.has('search')}
+				<div class="hidden only:flex gap-6 flex-col items-center">
+					<SearchX class="text-accent" size="36" />
+					<p class="text-center max-w-xs w-full">
+						Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
+						different way.
+					</p>
+				</div>
+			{/if}
+		{/each}
+	{:catch _}
+		<div class="hidden only:flex gap-6 flex-col items-center">
+			<SearchX class="text-accent" size="36" />
+			<p class="text-center max-w-xs w-full">
+				Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
+				different way.
+			</p>
+		</div>
+	{/await}
 </div>
