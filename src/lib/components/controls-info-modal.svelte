@@ -11,7 +11,7 @@
 			<Title>Interactive Controls Guide</Title>
 			<Description class="">
 				<p class="mb-2">
-					`` This page features interactive cards that you can navigate using various controls:
+					This page features interactive cards that you can navigate using various controls:
 				</p>
 				<ul class="list-disc list-inside pl-2">
 					<li>Swipe left for 'No'</li>
