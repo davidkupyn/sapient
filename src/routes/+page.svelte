@@ -15,7 +15,6 @@
 	import { readonly, writable } from 'svelte/store';
 	import { fade, scale, fly } from 'svelte/transition';
 	import { readableResults } from './survey/+page.svelte';
-	import { cn } from '$lib/helpers';
 	import Skeleton from '$lib/components/ui/skeleton.svelte';
 	import University from '$lib/components/university.svelte';
 
@@ -29,8 +28,6 @@
 		const actionChoice = localStorage.getItem('action-choice') as 'search' | 'survey';
 		currentView = actionChoice ? 'search' : 'survey';
 	});
-
-	$: formState.set(data.fetchState);
 </script>
 
 {#key mounted}
@@ -91,13 +88,7 @@
 								>
 							</p>
 						</div>
-						<Button
-							class="max-sm:w-full"
-							type="submit"
-							variant="accent"
-							loading={$readableFormState === 'busy'}
-							disabled={$readableFormState === 'busy'}
-						>
+						<Button class="max-sm:w-full" type="submit" variant="accent">
 							<Search size="16" />
 							Explore Now
 						</Button>
@@ -115,11 +106,6 @@
 			{/if}
 		</div>
 		{#if currentView === 'search'}
-			{#await data.universities}
-				loading
-			{:then univ}
-				jest
-			{/await}
 			<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl max-sm:px-6">
 				<SearchView />
 				{#await data.universities}
@@ -134,7 +120,7 @@
 							<University data={university} />
 						</div>
 					{:else}
-						{#if $page.url.searchParams.has('search')}
+						{#if $page.url.searchParams.get('search')}
 							<div class="hidden only:flex gap-6 flex-col items-center">
 								<SearchX class="text-accent" size="36" />
 								<p class="text-center max-w-xs w-full">
@@ -144,14 +130,6 @@
 							</div>
 						{/if}
 					{/each}
-				{:catch _}
-					<div class="hidden only:flex gap-6 flex-col items-center">
-						<SearchX class="text-accent" size="36" />
-						<p class="text-center max-w-xs w-full">
-							Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
-							different way.
-						</p>
-					</div>
 				{/await}
 			</div>
 		{/if}
