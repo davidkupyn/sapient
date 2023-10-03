@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import type { University as UniversityType } from '$lib/types';
 	import { SearchX } from 'lucide-svelte';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import Skeleton from './ui/skeleton.svelte';
 	import University from './university.svelte';
 
@@ -20,19 +20,24 @@
 		<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
 			<University data={university} />
 		</div>
-	{:else}
-		{#if $page.url.searchParams.has('search')}
-			<div class="hidden only:flex gap-6 flex-col items-center">
-				<SearchX class="text-accent" size="36" />
-				<p class="text-center max-w-xs w-full">
-					Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
-					different way.
-				</p>
-			</div>
-		{/if}
 	{/each}
+	{#if $page.url.searchParams.has('search') && !universities.length}
+		<div
+			in:scale|global={{ start: 0.9, duration: 200 }}
+			class="hidden only:flex gap-6 flex-col items-center"
+		>
+			<SearchX class="text-accent" size="36" />
+			<p class="text-center max-w-xs w-full">
+				Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
+				different way.
+			</p>
+		</div>
+	{/if}
 {:catch _}
-	<div class="hidden only:flex gap-6 flex-col items-center">
+	<div
+		in:scale|global={{ start: 0.9, duration: 200 }}
+		class="hidden only:flex gap-6 flex-col items-center"
+	>
 		<SearchX class="text-accent" size="36" />
 		<p class="text-center max-w-xs w-full">
 			Unfortunately, we weren't able to find anything for you. Perhaps try searching in a different
