@@ -5,12 +5,25 @@ export async function load({ url }) {
 
 	if (!searchQuery) {
 		return {
-			universities: []
+			streamed: {
+				universities: []
+			}
 		};
 	}
+
+	async function getUniversities() {
+		try {
+			const res = await fetch(`https://sapient-api.kupyn.dev/search?q=${searchQuery}`);
+			const universities: University[] = await res.json();
+
+			return universities;
+		} catch (error) {
+			console.error('error fetchig universities');
+		}
+	}
 	return {
-		universities: new Promise<University[]>(() =>
-			fetch(`https://sapient-api.kupyn.dev/search?q="${encodeURI(searchQuery)}"`)
-		)
+		streamed: {
+			universities: getUniversities()
+		}
 	};
 }

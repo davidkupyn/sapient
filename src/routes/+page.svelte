@@ -17,6 +17,7 @@
 	import { readableResults } from './survey/+page.svelte';
 	import Skeleton from '$lib/components/ui/skeleton.svelte';
 	import University from '$lib/components/university.svelte';
+	import Universities from '$lib/components/universities.svelte';
 
 	export let data;
 
@@ -108,29 +109,7 @@
 		{#if currentView === 'search'}
 			<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl max-sm:px-6">
 				<SearchView />
-				{#await data.universities}
-					{#each { length: 3 } as _, idx (idx)}
-						<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
-							<Skeleton class="rounded-2xl w-full h-[4.5rem]" />
-						</div>
-					{/each}
-				{:then universities}
-					{#each universities as university, idx (idx)}
-						<div in:fly|global={{ y: 150, duration: 300, delay: (idx + 1) * 75 }}>
-							<University data={university} />
-						</div>
-					{:else}
-						{#if $page.url.searchParams.get('search')}
-							<div class="hidden only:flex gap-6 flex-col items-center">
-								<SearchX class="text-accent" size="36" />
-								<p class="text-center max-w-xs w-full">
-									Unfortunately, we weren't able to find anything for you. Perhaps try searching in
-									a different way.
-								</p>
-							</div>
-						{/if}
-					{/each}
-				{/await}
+				<Universities />
 			</div>
 		{/if}
 	</main>
