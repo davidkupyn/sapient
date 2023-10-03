@@ -27,7 +27,7 @@
 			class="hidden only:flex gap-6 flex-col items-center"
 		>
 			<SearchX class="text-accent" size="36" />
-			<p class="text-center max-w-md w-full [text-wrap:balance]">
+			<p class="text-center max-w-md w-full [text-wrap:balance] text-muted-foreground">
 				Unfortunately, we weren't able to find anything for you. Perhaps try searching in a
 				different way.
 			</p>
@@ -38,7 +38,7 @@
 			class="hidden only:flex gap-6 flex-col items-center"
 		>
 			<GraduationCap class="text-accent" size="36" />
-			<p class="text-center max-w-md w-full [text-wrap:balance]">
+			<p class="text-center max-w-md w-full [text-wrap:balance] text-muted-foreground">
 				Start by searching for a university or a major.
 			</p>
 		</div>
