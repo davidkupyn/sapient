@@ -3,9 +3,7 @@
 	import Badge from './ui/badge.svelte';
 
 	export let data: University;
-	const name = data[1];
-	const id = data[0];
-	const city = data[2];
+	const [id, name, city] = data;
 </script>
 
 <a

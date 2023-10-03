@@ -1,1 +1,1 @@
-export type University = string;
+export type University = string[];

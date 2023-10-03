@@ -5,17 +5,17 @@
 
 <script lang="ts">
 	import { page } from '$app/stores';
-	import SearchView from '$lib/components/search-view.svelte';
+	import SearchView from '$lib/components/filter-card.svelte';
 	import SurveyViewCard from '$lib/components/survey-view-card.svelte';
 	import Badge from '$lib/components/ui/badge.svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import { Input } from '$lib/components/ui/input';
-	import { Search, Stars, X } from 'lucide-svelte';
+	import Universities from '$lib/components/universities.svelte';
+	import { Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { readonly, writable } from 'svelte/store';
 	import { fade, scale } from 'svelte/transition';
 	import { readableResults } from './survey/+page.svelte';
-	import { cn } from '$lib/helpers';
 
 	export let data;
 
@@ -27,8 +27,6 @@
 		const actionChoice = localStorage.getItem('action-choice') as 'search' | 'survey';
 		currentView = actionChoice ? 'search' : 'survey';
 	});
-
-	$: formState.set(data.fetchState);
 </script>
 
 {#key mounted}
@@ -89,13 +87,7 @@
 								>
 							</p>
 						</div>
-						<Button
-							class="max-sm:w-full"
-							type="submit"
-							variant="accent"
-							loading={$readableFormState === 'busy'}
-							disabled={$readableFormState === 'busy'}
-						>
+						<Button class="max-sm:w-full" type="submit" variant="accent">
 							<Search size="16" />
 							Explore Now
 						</Button>
@@ -113,7 +105,10 @@
 			{/if}
 		</div>
 		{#if currentView === 'search'}
-			<SearchView />
+			<div class="w-full flex mx-auto container gap-5 flex-col max-w-xl max-sm:px-6">
+				<SearchView />
+				<Universities />
+			</div>
 		{/if}
 	</main>
 {/key}
