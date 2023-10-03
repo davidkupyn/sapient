@@ -10,14 +10,12 @@
 	import Badge from '$lib/components/ui/badge.svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import { Input } from '$lib/components/ui/input';
-	import { Search, SearchX, Stars, X } from 'lucide-svelte';
+	import Universities from '$lib/components/universities.svelte';
+	import { Search, Stars } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { readonly, writable } from 'svelte/store';
-	import { fade, scale, fly } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import { readableResults } from './survey/+page.svelte';
-	import Skeleton from '$lib/components/ui/skeleton.svelte';
-	import University from '$lib/components/university.svelte';
-	import Universities from '$lib/components/universities.svelte';
 
 	export let data;
 

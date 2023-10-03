@@ -18,7 +18,7 @@ export async function load({ url }) {
 
 			return universities;
 		} catch (error) {
-			console.error('error fetchig universities');
+			console.error(error);
 		}
 	}
 	return {
