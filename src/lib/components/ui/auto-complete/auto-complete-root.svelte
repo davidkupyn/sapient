@@ -13,7 +13,7 @@
 	export let required = false;
 	export let placeholder = '';
 	export let disabled = false;
-	export let value: ComboboxOption<string> | undefined = undefined;
+	export let value: ComboboxOption<string> | ComboboxOption<string>[] | undefined = undefined;
 	export let loop = false;
 	export let preventScroll = true;
 	export let multiple = false;

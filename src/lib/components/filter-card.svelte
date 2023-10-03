@@ -7,10 +7,10 @@
 	import { Disclosure } from '$lib/components/ui/disclosure';
 	import Universities from '$lib/components/universities.svelte';
 
-	let modeValues: { label: string; value?: string }[] = [];
-	let cityValues: { label: string; value?: string }[] = [];
-	let ownershipValues: { label: string; value?: string }[] = [];
-	let degreeValues: { label: string; value?: string }[] = [];
+	let modeValues: { label: string; value: string }[] = [];
+	let cityValues: { label: string; value: string }[] = [];
+	let ownershipValues: { label: string; value: string }[] = [];
+	let degreeValues: { label: string; value: string }[] = [];
 
 	const modes = [
 		{ label: 'Full-time', value: 'full-time' },
