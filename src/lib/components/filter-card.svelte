@@ -42,7 +42,7 @@
 	];
 </script>
 
-{#if $page.data.streamed.universities.length}
+{#if true}
 	<Card class="w-full h-fit flex-1 p-4" let:Footer>
 		<Disclosure let:Summary let:Details>
 			<Summary>Filter</Summary>
