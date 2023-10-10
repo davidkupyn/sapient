@@ -17,8 +17,6 @@
 	import { fade, scale } from 'svelte/transition';
 	import { readableResults } from './survey/+page.svelte';
 
-	export let data;
-
 	let mounted = false;
 	let currentView: 'search' | 'survey';
 
