@@ -85,7 +85,7 @@
 <footer
 	class={cn(
 		'border-muted z-[0] w-full mt-8 bg-background',
-		$page.url.pathname === '/' ? '' : 'border-t'
+		$page.url.pathname === '/' ? 'absolute bottom-0' : 'border-t'
 	)}
 >
 	<div class="container mx-auto flex justify-between items-center px-6 h-14 relative bottom-0">
