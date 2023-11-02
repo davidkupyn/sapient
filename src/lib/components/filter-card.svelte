@@ -5,7 +5,6 @@
 	import Button from '$lib/components/ui/button.svelte';
 	import { Card } from '$lib/components/ui/card';
 	import { Disclosure } from '$lib/components/ui/disclosure';
-	import Universities from '$lib/components/universities.svelte';
 
 	let modeValues: { label: string; value: string }[] = [];
 	let cityValues: { label: string; value: string }[] = [];
