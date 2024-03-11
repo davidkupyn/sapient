@@ -106,12 +106,13 @@
 		fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
 	/>
 </svg>
-<slot />
-
+<main class="flex-grow">
+	<slot />
+</main>
 <footer
 	class={cn(
 		'border-muted z-[0] w-full mt-8 bg-background',
-		$page.url.pathname === '/' ? 'absolute bottom-0' : 'border-t'
+		$page.url.pathname === '/' ? '' : 'border-t'
 	)}
 >
 	<div class="container mx-auto flex justify-between items-center px-6 h-14 relative bottom-0">
